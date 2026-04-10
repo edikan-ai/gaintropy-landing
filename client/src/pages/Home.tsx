@@ -1960,10 +1960,10 @@ function Access() {
       if (res.ok) {
         setSubmitted(true);
       } else {
-        setError("Something went wrong. Try again or email founders@gaintropy.com");
+        setError("Something went wrong. Try again or email hello@gaintropy.com");
       }
     } catch {
-      setError("Something went wrong. Try again or email founders@gaintropy.com");
+      setError("Something went wrong. Try again or email hello@gaintropy.com");
     } finally {
       setLoading(false);
     }
@@ -2183,13 +2183,13 @@ function Footer() {
         </div>
         <div className="flex items-center gap-6">
           <a
-            href="mailto:founders@gaintropy.com"
+            href="mailto:hello@gaintropy.com"
             className="text-xs transition-colors duration-200"
             style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Space Grotesk, sans-serif" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.5)")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.2)")}
           >
-            founders@gaintropy.com
+            hello@gaintropy.com
           </a>
           <button
             onClick={() => document.getElementById("access")?.scrollIntoView({ behavior: "smooth" })}
