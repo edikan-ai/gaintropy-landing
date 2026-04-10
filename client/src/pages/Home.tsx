@@ -1664,6 +1664,7 @@ function IndustryTicker() {
   const [hoveredIndustry, setHoveredIndustry] = useState<string | null>(null);
   const [paused, setPaused] = useState(false);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   const items = [...INDUSTRIES, ...INDUSTRIES];
 
@@ -1713,7 +1714,7 @@ function IndustryTicker() {
 
         <div
           className="flex gap-0 whitespace-nowrap"
-          style={{ animation: `ticker 40s linear infinite`, animationPlayState: paused ? "paused" : "running" }}
+          style={{ animation: `ticker ${isMobile ? "18s" : "25s"} linear infinite`, animationPlayState: paused ? "paused" : "running" }}
         >
           {items.map((name, i) => (
             <div key={i} className="flex items-center gap-0 flex-shrink-0 relative">

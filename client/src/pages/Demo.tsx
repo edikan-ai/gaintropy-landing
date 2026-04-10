@@ -221,7 +221,7 @@ function LeftPanel({ scenario, phase }: { scenario: DemoScenario; phase: number 
   const borderColor = phase === 1 ? "border-amber-500/30" : "border-emerald-500/20";
 
   return (
-    <div className={`h-full flex flex-col border-r border-white/8`}>
+    <div className={`h-full flex flex-col md:border-r border-white/8`}>
       {/* Header */}
       <div className={`px-4 py-2 border-b border-white/8`}>
         <span className="text-[10px] font-mono-data font-bold tracking-wider" style={{ color: phaseColor }}>
@@ -399,6 +399,7 @@ function RightPanel({ scenario, phase, selectedOpt, onSelectOpt }: {
 function DemoEngine({ scenario }: { scenario: DemoScenario }) {
   const [phase, setPhase] = useState(0);
   const [selectedOpt, setSelectedOpt] = useState(0);
+  const [mobileTab, setMobileTab] = useState<"observe" | "predict">("observe");
 
   useEffect(() => { setPhase(0); setSelectedOpt(0); }, [scenario.id]);
 
@@ -416,7 +417,7 @@ function DemoEngine({ scenario }: { scenario: DemoScenario }) {
           <button
             key={name}
             onClick={() => setPhase(i)}
-            className={`flex-1 py-2.5 text-[10px] font-mono-data font-bold tracking-widest transition-all border-r border-white/8 last:border-r-0 ${
+            className={`flex-1 py-3 md:py-2.5 text-[11px] md:text-[10px] font-mono-data font-bold tracking-widest transition-all border-r border-white/8 last:border-r-0 ${
               i === phase ? "bg-white/5" : "hover:bg-white/3"
             }`}
             style={{ color: i === phase ? phaseColors[i] : "#4B5563" }}
@@ -431,8 +432,28 @@ function DemoEngine({ scenario }: { scenario: DemoScenario }) {
         ))}
       </div>
 
-      {/* Split panel */}
-      <div className="flex-1 grid grid-cols-5 min-h-0">
+      {/* Mobile tab toggle (observe / predict panels) */}
+      <div className="flex md:hidden border-b border-white/8 shrink-0">
+        <button
+          onClick={() => setMobileTab("observe")}
+          className={`flex-1 py-2.5 text-[10px] font-mono-data font-bold tracking-wider text-center transition-all ${
+            mobileTab === "observe" ? "bg-white/5 text-white" : "text-gray-500"
+          }`}
+        >
+          OBSERVE
+        </button>
+        <button
+          onClick={() => setMobileTab("predict")}
+          className={`flex-1 py-2.5 text-[10px] font-mono-data font-bold tracking-wider text-center transition-all border-l border-white/8 ${
+            mobileTab === "predict" ? "bg-white/5 text-white" : "text-gray-500"
+          }`}
+        >
+          {phase >= 2 ? "PRESCRIBE" : "PREDICT"}
+        </button>
+      </div>
+
+      {/* Split panel — side by side on desktop, tabbed on mobile */}
+      <div className="flex-1 hidden md:grid grid-cols-5 min-h-0">
         <div className="col-span-3 min-h-0 overflow-hidden">
           <LeftPanel scenario={scenario} phase={phase} />
         </div>
@@ -440,13 +461,20 @@ function DemoEngine({ scenario }: { scenario: DemoScenario }) {
           <RightPanel scenario={scenario} phase={phase} selectedOpt={selectedOpt} onSelectOpt={setSelectedOpt} />
         </div>
       </div>
+      <div className="flex-1 md:hidden min-h-0 overflow-y-auto">
+        {mobileTab === "observe" ? (
+          <LeftPanel scenario={scenario} phase={phase} />
+        ) : (
+          <RightPanel scenario={scenario} phase={phase} selectedOpt={selectedOpt} onSelectOpt={setSelectedOpt} />
+        )}
+      </div>
 
       {/* Nav */}
-      <div className="flex items-center justify-between px-4 py-3 border-t border-white/8 shrink-0">
+      <div className="flex items-center justify-between px-4 py-3 md:py-3 border-t border-white/8 shrink-0">
         <button
           onClick={prev}
           disabled={phase === 0}
-          className="text-xs font-mono-data text-gray-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="text-xs font-mono-data text-gray-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors py-1 px-2"
         >
           ← PREV
         </button>
@@ -456,7 +484,7 @@ function DemoEngine({ scenario }: { scenario: DemoScenario }) {
         <button
           onClick={next}
           disabled={phase === 3}
-          className="text-xs font-mono-data px-3 py-1 rounded border transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+          className="text-xs font-mono-data px-3 py-2 md:py-1 rounded border transition-all disabled:opacity-30 disabled:cursor-not-allowed"
           style={{
             color: phase === 3 ? "#6B7280" : "#FF4D00",
             borderColor: phase === 3 ? "#374151" : "#FF4D00",
@@ -531,10 +559,31 @@ export default function Demo() {
         </div>
       </div>
 
+      {/* Mobile scenario selector (horizontal scroll) */}
+      <div className="md:hidden px-4 py-2 border-b border-white/8 shrink-0 overflow-x-auto">
+        <div className="text-[10px] text-gray-500 font-mono-data tracking-wider mb-2">SCENARIOS</div>
+        <div className="flex gap-2">
+          {scenariosForIndustry.map((s, i) => (
+            <button
+              key={s.id}
+              onClick={() => setSelectedScenarioId(s.id)}
+              className={`shrink-0 text-left px-3 py-2 rounded border transition-all ${
+                s.id === activeScenario.id
+                  ? "border-[#FF4D00] bg-[#FF4D00]/10"
+                  : "border-white/10 hover:border-white/20"
+              }`}
+            >
+              <div className="text-[10px] text-gray-600 font-mono-data">#{i + 1}</div>
+              <div className="text-xs text-gray-300 leading-tight mt-0.5 whitespace-nowrap">{s.scenarioName}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Scenario selector + demo panel */}
       <div className="flex-1 flex min-h-0">
-        {/* Scenario list */}
-        <div className="w-64 shrink-0 border-r border-white/8 flex flex-col min-h-0">
+        {/* Scenario list (desktop only) */}
+        <div className="hidden md:flex w-64 shrink-0 border-r border-white/8 flex-col min-h-0">
           <div className="px-3 py-2 border-b border-white/8">
             <div className="text-[10px] text-gray-500 font-mono-data tracking-wider">SCENARIOS</div>
           </div>
