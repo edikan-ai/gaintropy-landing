@@ -8,12 +8,14 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 
 const Demo = lazy(() => import("./pages/Demo"));
+const Explorer = lazy(() => import("./pages/Explorer"));
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/demo"} component={Demo} />
+      <Route path={"/explore"} component={Explorer} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

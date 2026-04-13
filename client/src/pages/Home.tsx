@@ -1005,6 +1005,15 @@ function Navbar() {
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
+          <a
+            href="/explore"
+            className="flex items-center gap-1.5 text-sm transition-colors duration-200"
+            style={{ color: "rgba(255,255,255,0.45)", fontFamily: "Space Grotesk, sans-serif" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#FFFFFF")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
+          >
+            Problem Library
+          </a>
           <button
             onClick={() => document.getElementById("access")?.scrollIntoView({ behavior: "smooth" })}
             className="flex items-center gap-1.5 text-sm transition-colors duration-200"
@@ -1044,6 +1053,14 @@ function Navbar() {
             className="md:hidden px-6 pb-5 flex flex-col gap-4"
             style={{ background: "rgba(10,10,10,0.97)", borderTop: "1px solid rgba(255,255,255,0.06)" }}
           >
+            <a
+              href="/explore"
+              className="text-sm py-2 text-left block"
+              style={{ color: "rgba(255,255,255,0.5)", fontFamily: "Space Grotesk, sans-serif" }}
+              onClick={() => setMobileOpen(false)}
+            >
+              Problem Library
+            </a>
             <button
               className="text-sm py-2 text-left"
               style={{ color: "rgba(255,255,255,0.5)", fontFamily: "Space Grotesk, sans-serif" }}
