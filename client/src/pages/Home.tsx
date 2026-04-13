@@ -1676,9 +1676,8 @@ function IndustryTicker() {
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
-  const mid = Math.ceil(INDUSTRIES.length / 2);
-  const row1Source = INDUSTRIES.slice(0, mid);
-  const row2Source = INDUSTRIES.slice(mid);
+  const row1Source = INDUSTRIES;
+  const row2Source = [...INDUSTRIES.slice(25), ...INDUSTRIES.slice(0, 25)];
   const row1 = [...row1Source, ...row1Source];
   const row2 = [...row2Source, ...row2Source];
 
@@ -1693,8 +1692,8 @@ function IndustryTicker() {
     setPaused(false);
   };
 
-  const tickerSpeed = isMobile ? "12s" : "18s";
-  const tickerSpeedRow2 = isMobile ? "15s" : "22s";
+  const tickerSpeed = isMobile ? "25s" : "35s";
+  const tickerSpeedRow2 = isMobile ? "30s" : "42s";
 
   const renderRow = (items: string[]) =>
     items.map((name, i) => (
@@ -1752,7 +1751,7 @@ function IndustryTicker() {
         {/* Row 1 — scrolls left */}
         <div
           className="flex gap-0 whitespace-nowrap"
-          style={{ animation: `ticker ${tickerSpeed} linear infinite`, animationPlayState: paused ? "paused" : "running" }}
+          style={{ animation: `ticker ${tickerSpeed} linear infinite`, animationPlayState: paused ? "paused" : "running", willChange: "transform" }}
         >
           {renderRow(row1)}
         </div>
@@ -1760,7 +1759,7 @@ function IndustryTicker() {
         {/* Row 2 — scrolls right */}
         <div
           className="flex gap-0 whitespace-nowrap"
-          style={{ animation: `tickerReverse ${tickerSpeedRow2} linear infinite`, animationPlayState: paused ? "paused" : "running" }}
+          style={{ animation: `tickerReverse ${tickerSpeedRow2} linear infinite`, animationPlayState: paused ? "paused" : "running", willChange: "transform" }}
         >
           {renderRow(row2)}
         </div>
