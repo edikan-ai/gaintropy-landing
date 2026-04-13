@@ -1666,7 +1666,11 @@ function IndustryTicker() {
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
-  const items = [...INDUSTRIES, ...INDUSTRIES];
+  const mid = Math.ceil(INDUSTRIES.length / 2);
+  const row1Source = INDUSTRIES.slice(0, mid);
+  const row2Source = INDUSTRIES.slice(mid);
+  const row1 = [...row1Source, ...row1Source];
+  const row2 = [...row2Source, ...row2Source];
 
   const handleMouseEnter = (name: string, e: React.MouseEvent) => {
     setHoveredIndustry(name);
@@ -1678,6 +1682,29 @@ function IndustryTicker() {
     setHoveredIndustry(null);
     setPaused(false);
   };
+
+  const tickerSpeed = isMobile ? "18s" : "25s";
+  const tickerSpeedRow2 = isMobile ? "22s" : "30s";
+
+  const renderRow = (items: string[]) =>
+    items.map((name, i) => (
+      <div key={i} className="flex items-center gap-0 flex-shrink-0 relative">
+        <span
+          className="px-8 text-sm font-medium transition-colors duration-200"
+          style={{
+            color: hoveredIndustry === name ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.35)",
+            fontFamily: "Space Grotesk, sans-serif",
+            letterSpacing: "0.02em",
+            cursor: "default",
+          }}
+          onMouseEnter={(e) => handleMouseEnter(name, e)}
+          onMouseLeave={handleMouseLeave}
+        >
+          {name}
+        </span>
+        <span style={{ color: "#FF4D00", fontSize: "6px", opacity: 0.6 }}>●</span>
+      </div>
+    ));
 
   return (
     <section
@@ -1701,7 +1728,7 @@ function IndustryTicker() {
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="relative"
+        className="relative space-y-4"
       >
         <div
           className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
@@ -1712,28 +1739,20 @@ function IndustryTicker() {
           style={{ background: "linear-gradient(to left, #0A0A0A, transparent)" }}
         />
 
+        {/* Row 1 — scrolls left */}
         <div
           className="flex gap-0 whitespace-nowrap"
-          style={{ animation: `ticker ${isMobile ? "18s" : "25s"} linear infinite`, animationPlayState: paused ? "paused" : "running" }}
+          style={{ animation: `ticker ${tickerSpeed} linear infinite`, animationPlayState: paused ? "paused" : "running" }}
         >
-          {items.map((name, i) => (
-            <div key={i} className="flex items-center gap-0 flex-shrink-0 relative">
-              <span
-                className="px-8 text-sm font-medium transition-colors duration-200"
-                style={{
-                  color: hoveredIndustry === name ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.35)",
-                  fontFamily: "Space Grotesk, sans-serif",
-                  letterSpacing: "0.02em",
-                  cursor: "default",
-                }}
-                onMouseEnter={(e) => handleMouseEnter(name, e)}
-                onMouseLeave={handleMouseLeave}
-              >
-                {name}
-              </span>
-              <span style={{ color: "#FF4D00", fontSize: "6px", opacity: 0.6 }}>●</span>
-            </div>
-          ))}
+          {renderRow(row1)}
+        </div>
+
+        {/* Row 2 — scrolls right */}
+        <div
+          className="flex gap-0 whitespace-nowrap"
+          style={{ animation: `tickerReverse ${tickerSpeedRow2} linear infinite`, animationPlayState: paused ? "paused" : "running" }}
+        >
+          {renderRow(row2)}
         </div>
       </motion.div>
 
@@ -2213,6 +2232,10 @@ const globalStyles = `
   @keyframes ticker {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
+  }
+  @keyframes tickerReverse {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
   }
 `;
 
