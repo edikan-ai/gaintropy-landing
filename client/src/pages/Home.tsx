@@ -1088,7 +1088,7 @@ function Hero() {
         muted
         playsInline
         poster="/hero-poster.jpg"
-        className="absolute inset-0 w-full h-full object-cover"
+        className={`absolute w-full ${isMobile ? "top-1/2 -translate-y-1/2" : "inset-0 h-full object-cover"}`}
         style={{ opacity: 0.95 }}
       >
         <source src={isMobile ? "/hero-mobile.mp4" : "/hero-desktop.mp4"} type="video/mp4" />
