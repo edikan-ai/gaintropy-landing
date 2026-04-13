@@ -1089,7 +1089,7 @@ function Hero() {
         playsInline
         poster="/hero-poster.jpg"
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ opacity: 0.95, objectPosition: isMobile ? "center center" : "center center" }}
+        style={{ opacity: 0.95, objectPosition: isMobile ? "65% center" : "center center" }}
       >
         <source src={isMobile ? "/hero-mobile.mp4" : "/hero-desktop.mp4"} type="video/mp4" />
       </video>
