@@ -1089,16 +1089,16 @@ function Hero() {
         playsInline
         poster="/hero-poster.jpg"
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ opacity: 0.4 }}
+        style={{ opacity: 0.75 }}
       >
         <source src={isMobile ? "/hero-mobile.mp4" : "/hero-desktop.mp4"} type="video/mp4" />
       </video>
 
-      {/* Dark gradient overlay for text readability */}
+      {/* Subtle gradient overlay for text readability */}
       <div
         className="absolute inset-0"
         style={{
-          background: "linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.6) 50%, rgba(10,10,10,0.4) 100%)",
+          background: "linear-gradient(to right, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.15) 100%)",
         }}
       />
 
