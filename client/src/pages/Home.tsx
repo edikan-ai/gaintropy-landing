@@ -1074,21 +1074,31 @@ function Navbar() {
 // ─── HERO ─────────────────────────────────────────────────────────────────────
 
 function Hero() {
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   return (
     <section
       className="relative min-h-screen flex flex-col justify-center overflow-hidden"
       style={{ background: "#0A0A0A" }}
     >
-      {/* Subtle radial glow behind headline */}
+      {/* Background hero video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        poster="/hero-poster.jpg"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ opacity: 0.4 }}
+      >
+        <source src={isMobile ? "/hero-mobile.mp4" : "/hero-desktop.mp4"} type="video/mp4" />
+      </video>
+
+      {/* Dark gradient overlay for text readability */}
       <div
-        className="absolute pointer-events-none"
+        className="absolute inset-0"
         style={{
-          top: "30%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "800px",
-          height: "600px",
-          background: "radial-gradient(ellipse at center, rgba(255,77,0,0.07) 0%, transparent 70%)",
+          background: "linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.6) 50%, rgba(10,10,10,0.4) 100%)",
         }}
       />
 
