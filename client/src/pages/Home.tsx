@@ -1683,8 +1683,8 @@ function IndustryTicker() {
     setPaused(false);
   };
 
-  const tickerSpeed = isMobile ? "18s" : "25s";
-  const tickerSpeedRow2 = isMobile ? "22s" : "30s";
+  const tickerSpeed = isMobile ? "12s" : "18s";
+  const tickerSpeedRow2 = isMobile ? "15s" : "22s";
 
   const renderRow = (items: string[]) =>
     items.map((name, i) => (
