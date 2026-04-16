@@ -112,52 +112,116 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
   onToggle: () => void;
 }) {
   return (
-    <div
-      className="rounded border transition-all"
+    <article
+      className="rounded-lg border transition-colors overflow-hidden"
       style={{
-        borderColor: expanded ? "rgba(255,77,0,0.3)" : "rgba(255,255,255,0.06)",
-        background: expanded ? "rgba(255,77,0,0.03)" : "rgba(255,255,255,0.02)",
+        borderColor: expanded ? "rgba(255,77,0,0.45)" : "#2A2A2A",
+        background: "#141414",
       }}
     >
-      <button onClick={onToggle} className="w-full text-left p-4 md:p-5">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-              <span className="text-[10px] font-mono-data px-1.5 py-0.5 rounded" style={{ color: "#00D4FF", background: "rgba(0,212,255,0.1)", border: "1px solid rgba(0,212,255,0.2)" }}>
-                {archetype.archetypeId}
-              </span>
-              <span className="text-[10px] font-mono-data" style={{ color: "#8A8A8A" }}>
+      <button onClick={onToggle} className="w-full text-left block p-5 cursor-pointer">
+        {/*
+          Mobile: stacked single column.
+          Desktop (lg, ≥1024px): 3-column grid — ID/stage/title (220px) | description+tags (1fr) | pricing (180px).
+          min-w-0 on each track so 1fr can shrink properly and titles wrap on
+          word boundaries instead of collapsing into character-wide columns.
+        */}
+        <div className="grid gap-5 lg:gap-6 items-start grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)_180px]">
+          {/* LEFT — archetype ID, process stage, title */}
+          <div className="min-w-0 flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <span
+                  className="inline-block text-[10px] font-mono-data px-2 py-0.5 rounded tracking-wider"
+                  style={{
+                    color: "#00D4FF",
+                    background: "rgba(0,212,255,0.08)",
+                    border: "1px solid rgba(0,212,255,0.25)",
+                  }}
+                >
+                  {archetype.archetypeId}
+                </span>
+              </div>
+              <div
+                className="text-[10px] font-mono-data tracking-wider uppercase"
+                style={{ color: "#A0A0A0" }}
+              >
                 {archetype.processStage}
-              </span>
+              </div>
+              <h3
+                className="text-sm md:text-[15px] font-semibold leading-snug"
+                style={{
+                  color: "#F5F5F5",
+                  fontFamily: "Space Grotesk, sans-serif",
+                  // Critical: never break inside a word, always wrap on whitespace
+                  wordBreak: "normal",
+                  overflowWrap: "break-word",
+                  hyphens: "none",
+                }}
+              >
+                {archetype.title}
+              </h3>
             </div>
-            <h3 className="text-sm md:text-base font-semibold text-white mb-2" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
-              {archetype.title}
-            </h3>
-            <p className="text-xs text-gray-400 leading-relaxed line-clamp-2" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
-              {archetype.operatorDescription}
-            </p>
+
+            {/* MIDDLE — description + tag pills (constrained to its column) */}
+            <div className="min-w-0 flex flex-col gap-3">
+              <p
+                className="text-xs leading-relaxed line-clamp-3"
+                style={{
+                  color: "#A0A0A0",
+                  fontFamily: "Space Grotesk, sans-serif",
+                  overflowWrap: "break-word",
+                }}
+              >
+                {archetype.operatorDescription}
+              </p>
+              {archetype.classificationTags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {archetype.classificationTags.slice(0, 4).map((tag, i) => (
+                    <span
+                      key={i}
+                      className="text-[10px] font-mono-data px-2 py-0.5 rounded"
+                      style={{
+                        color: "#8A8A8A",
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* RIGHT — pricing / time to value (right-aligned on desktop) */}
+            <div className="min-w-0 flex flex-col gap-1.5 lg:items-end lg:text-right">
+              <div
+                className="text-[10px] font-mono-data tracking-wider uppercase"
+                style={{ color: "#6B7280" }}
+              >
+                Accepted Loss
+              </div>
+              <div
+                className="text-sm md:text-base font-bold font-mono-data leading-tight whitespace-nowrap"
+                style={{ color: "#FF4D00" }}
+              >
+                {archetype.acceptedLoss}
+              </div>
+              <div
+                className="text-[10px] font-mono-data tracking-wide mt-1"
+                style={{ color: "#6B7280" }}
+              >
+                {archetype.timeToValue}
+              </div>
+            </div>
           </div>
-          <div className="shrink-0 text-right">
-            <div className="text-[10px] font-mono-data text-gray-500 mb-1">ACCEPTED LOSS</div>
-            <div className="text-sm font-bold font-mono-data" style={{ color: "#FF4D00" }}>
-              {archetype.acceptedLoss}
-            </div>
-            <div className="text-[10px] font-mono-data text-gray-600 mt-2">
-              {archetype.timeToValue}
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center gap-1.5 mt-3 flex-wrap">
-          {archetype.classificationTags.slice(0, 4).map((tag, i) => (
-            <span key={i} className="text-[9px] font-mono-data px-1.5 py-0.5 rounded" style={{ color: "#8A8A8A", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
-              {tag}
-            </span>
-          ))}
-        </div>
       </button>
 
       {expanded && (
-        <div className="px-4 md:px-5 pb-5 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+        <div
+          className="px-5 pb-5 border-t"
+          style={{ borderColor: "#2A2A2A" }}
+        >
           {/* Operator description */}
           <div className="mt-4 mb-5">
             <div className="text-[10px] font-mono-data text-gray-500 tracking-wider mb-2">OPERATOR DESCRIPTION</div>
@@ -225,7 +289,7 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
           )}
         </div>
       )}
-    </div>
+    </article>
   );
 }
 
@@ -575,7 +639,7 @@ export default function Explorer() {
             </div>
 
             {/* Archetype cards */}
-            <div className="space-y-2">
+            <div className="space-y-3 max-w-[1320px]">
               {filteredArchetypes.map(a => (
                 <ArchetypeCard
                   key={a.archetypeId}
