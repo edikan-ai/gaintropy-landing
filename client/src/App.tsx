@@ -15,7 +15,10 @@ function Router() {
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/demo"} component={Demo} />
+      {/* Problem Library Explorer — accessible by direct URL only,
+          intentionally not linked from the homepage navigation. */}
       <Route path={"/explore"} component={Explorer} />
+      <Route path={"/library"} component={Explorer} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>
