@@ -197,7 +197,7 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
             <div className="min-w-0 flex flex-col gap-1.5 lg:items-end lg:text-right">
               <div
                 className="text-[10px] font-mono-data tracking-wider uppercase"
-                style={{ color: "#6B7280" }}
+                style={{ color: "#9CA3AF" }}
               >
                 Accepted Loss
               </div>
@@ -209,7 +209,7 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
               </div>
               <div
                 className="text-[10px] font-mono-data tracking-wide mt-1"
-                style={{ color: "#6B7280" }}
+                style={{ color: "#9CA3AF" }}
               >
                 {archetype.timeToValue}
               </div>
@@ -224,7 +224,7 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
         >
           {/* Operator description */}
           <div className="mt-4 mb-5">
-            <div className="text-[10px] font-mono-data text-gray-500 tracking-wider mb-2">OPERATOR DESCRIPTION</div>
+            <div className="text-[10px] font-mono-data text-gray-400 tracking-wider mb-2">OPERATOR DESCRIPTION</div>
             <p className="text-xs text-gray-300 leading-relaxed" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
               {archetype.operatorDescription}
             </p>
@@ -233,7 +233,7 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
           {/* Mathematical description */}
           {archetype.mathematicalDescription && (
             <div className="mb-5">
-              <div className="text-[10px] font-mono-data text-gray-500 tracking-wider mb-2">MATHEMATICAL FORMULATION</div>
+              <div className="text-[10px] font-mono-data text-gray-400 tracking-wider mb-2">MATHEMATICAL FORMULATION</div>
               <p className="text-xs leading-relaxed p-3 rounded" style={{ color: "#00D4FF", background: "rgba(0,212,255,0.05)", border: "1px solid rgba(0,212,255,0.1)", fontFamily: "JetBrains Mono, monospace" }}>
                 {archetype.mathematicalDescription}
               </p>
@@ -243,7 +243,7 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
           {/* Data requirements mapped to infrastructure */}
           {archetype.dataRequirements.length > 0 && (
             <div className="mb-5">
-              <div className="text-[10px] font-mono-data text-gray-500 tracking-wider mb-2">
+              <div className="text-[10px] font-mono-data text-gray-400 tracking-wider mb-2">
                 DATA REQUIREMENTS
                 {infra.historian !== "Any / Not Sure" && (
                   <span style={{ color: "#00D4FF" }}> — mapped to {infra.historian}</span>
@@ -263,7 +263,7 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
           {/* Equipment variants */}
           {archetype.equipmentVariants.length > 0 && (
             <div className="mb-5">
-              <div className="text-[10px] font-mono-data text-gray-500 tracking-wider mb-2">CONFIGURATION VARIANTS</div>
+              <div className="text-[10px] font-mono-data text-gray-400 tracking-wider mb-2">CONFIGURATION VARIANTS</div>
               <div className="flex flex-wrap gap-1.5">
                 {archetype.equipmentVariants.map((v, i) => (
                   <span key={i} className="text-[10px] font-mono-data px-2 py-1 rounded" style={{ color: "#FF4D00", background: "rgba(255,77,0,0.08)", border: "1px solid rgba(255,77,0,0.15)" }}>
@@ -277,7 +277,7 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
           {/* Cross-industry analogs */}
           {archetype.crossIndustryAnalogs.length > 0 && (
             <div>
-              <div className="text-[10px] font-mono-data text-gray-500 tracking-wider mb-2">CROSS-INDUSTRY ANALOGS</div>
+              <div className="text-[10px] font-mono-data text-gray-400 tracking-wider mb-2">CROSS-INDUSTRY ANALOGS</div>
               <div className="flex flex-wrap gap-1.5">
                 {archetype.crossIndustryAnalogs.map((a, i) => (
                   <span key={i} className="text-[10px] font-mono-data px-2 py-1 rounded" style={{ color: "#8A8A8A", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}>
@@ -357,7 +357,7 @@ export default function Explorer() {
           <span className="text-base font-bold tracking-tight text-white group-hover:text-[#FF4D00] transition-colors" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
             GAINTROPY
           </span>
-          <span className="text-gray-600 text-sm">/ Problem Library</span>
+          <span className="text-gray-400 text-sm">/ Problem Library</span>
         </Link>
         <Link
           href="/#access"
@@ -373,7 +373,7 @@ export default function Explorer() {
         <h1 className="text-lg md:text-xl font-bold text-white" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
           Problem Library Explorer
         </h1>
-        <p className="text-xs text-gray-500 mt-1" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
+        <p className="text-xs text-gray-400 mt-1" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
           {archetypes.length} pre-built prescriptive solutions across {processStages.length} process stages — configure your plant to see what applies.
         </p>
       </div>
@@ -408,7 +408,7 @@ export default function Explorer() {
         {/* Step 1: Industry */}
         {step === 1 && (
           <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
-            <div className="text-[10px] font-mono-data tracking-wider text-gray-500 mb-4">SELECT INDUSTRY</div>
+            <div className="text-[10px] font-mono-data tracking-wider text-gray-400 mb-4">SELECT INDUSTRY</div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
               {INDUSTRIES.map(ind => (
                 <button
@@ -432,7 +432,7 @@ export default function Explorer() {
                     {ind.name}
                   </div>
                   {!ind.available && (
-                    <div className="text-[10px] font-mono-data text-gray-600">Coming Soon</div>
+                    <div className="text-[10px] font-mono-data text-gray-400">Coming Soon</div>
                   )}
                   {ind.available && ind.id === "steel" && (
                     <div className="text-[10px] font-mono-data" style={{ color: "#00D4FF" }}>
@@ -448,7 +448,7 @@ export default function Explorer() {
         {/* Step 2: Plant Configuration */}
         {step === 2 && (
           <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
-            <div className="text-[10px] font-mono-data tracking-wider text-gray-500 mb-4">SELECT MILL TYPE</div>
+            <div className="text-[10px] font-mono-data tracking-wider text-gray-400 mb-4">SELECT MILL TYPE</div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {MILL_TYPES.map(mill => (
                 <button
@@ -478,7 +478,7 @@ export default function Explorer() {
         {/* Step 3: Data Infrastructure */}
         {step === 3 && (
           <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
-            <div className="text-[10px] font-mono-data tracking-wider text-gray-500 mb-4">DATA INFRASTRUCTURE</div>
+            <div className="text-[10px] font-mono-data tracking-wider text-gray-400 mb-4">DATA INFRASTRUCTURE</div>
             <p className="text-xs text-gray-400 mb-6" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
               Tell us what systems your plant runs. This helps us map data requirements to your actual infrastructure.
             </p>
@@ -490,7 +490,7 @@ export default function Explorer() {
                 { label: "PRIMARY DATABASE", value: database, setter: setDatabase, options: DATABASES },
               ].map(({ label, value, setter, options }) => (
                 <div key={label}>
-                  <div className="text-[10px] font-mono-data text-gray-500 tracking-wider mb-1.5">{label}</div>
+                  <div className="text-[10px] font-mono-data text-gray-400 tracking-wider mb-1.5">{label}</div>
                   <select
                     value={value}
                     onChange={e => setter(e.target.value)}
@@ -517,19 +517,19 @@ export default function Explorer() {
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
                   <div>
-                    <div className="text-gray-500 font-mono-data text-[9px]">FREQUENCY</div>
+                    <div className="text-gray-400 font-mono-data text-[9px]">FREQUENCY</div>
                     <div className="text-white font-mono-data">{matchingInfra.frequency}</div>
                   </div>
                   <div>
-                    <div className="text-gray-500 font-mono-data text-[9px]">DEPLOYMENT</div>
+                    <div className="text-gray-400 font-mono-data text-[9px]">DEPLOYMENT</div>
                     <div className="text-white font-mono-data">{matchingInfra.deploymentWeeks} weeks</div>
                   </div>
                   <div>
-                    <div className="text-gray-500 font-mono-data text-[9px]">PROTOCOLS</div>
+                    <div className="text-gray-400 font-mono-data text-[9px]">PROTOCOLS</div>
                     <div className="text-white font-mono-data">{matchingInfra.protocols.slice(0, 2).join(", ")}</div>
                   </div>
                   <div>
-                    <div className="text-gray-500 font-mono-data text-[9px]">DATABASE</div>
+                    <div className="text-gray-400 font-mono-data text-[9px]">DATABASE</div>
                     <div className="text-white font-mono-data truncate">{matchingInfra.database.split(",")[0]}</div>
                   </div>
                 </div>
@@ -561,7 +561,7 @@ export default function Explorer() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-[10px] font-mono-data text-gray-500">TOTAL ADDRESSABLE LOSS</div>
+                  <div className="text-[10px] font-mono-data text-gray-400">TOTAL ADDRESSABLE LOSS</div>
                   <div className="text-lg font-bold font-mono-data" style={{ color: "#FF4D00" }}>
                     {totalLoss(filteredArchetypes)}/yr
                   </div>
@@ -653,7 +653,7 @@ export default function Explorer() {
 
             {filteredArchetypes.length === 0 && (
               <div className="text-center py-16">
-                <div className="text-sm text-gray-500" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
+                <div className="text-sm text-gray-400" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
                   No problems match your current filters.
                 </div>
               </div>

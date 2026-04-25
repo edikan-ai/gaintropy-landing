@@ -86,7 +86,7 @@ function RiskBar({ value, max, warning, critical, unit }: {
     <div className="space-y-2">
       {/* Current value */}
       <div className="flex items-baseline justify-between">
-        <span className="text-[10px] text-gray-500 font-mono-data uppercase tracking-wider">Current</span>
+        <span className="text-[10px] text-gray-400 font-mono-data uppercase tracking-wider">Current</span>
         <span className="text-base font-bold font-mono-data" style={{ color }}>
           {fmt(value, unit)}
         </span>
@@ -148,7 +148,7 @@ function SensorRow({ sensor, phase }: { sensor: DemoScenario["sensors"][0]; phas
       <span className="text-xs text-gray-400 font-mono-data truncate max-w-[45%]">{sensor.name}</span>
       <div className="flex items-center gap-2">
         {isAnomaly && String(anomaly) !== String(normal) && (
-          <span className="text-xs text-gray-600 line-through font-mono-data">{normal}{sensor.unit}</span>
+          <span className="text-xs text-gray-400 line-through font-mono-data">{normal}{sensor.unit}</span>
         )}
         <span className={`text-sm font-bold font-mono-data ${changed && isAnomaly ? "text-amber-400" : "text-emerald-400"}`}>
           {val}{sensor.unit}
@@ -160,7 +160,7 @@ function SensorRow({ sensor, phase }: { sensor: DemoScenario["sensors"][0]; phas
 
 // ─── Option Card ──────────────────────────────────────────────────────────────
 function OptionCard({ opt, selected, onSelect }: { opt: DemoPrescriptiveOption; selected: boolean; onSelect: () => void }) {
-  const rankColor = opt.rank === 1 ? "#FF4D00" : opt.rank === 2 ? "#F59E0B" : "#6B7280";
+  const rankColor = opt.rank === 1 ? "#FF4D00" : opt.rank === 2 ? "#F59E0B" : "#94A3B8";
   const rankLabel = opt.rank === 1 ? "RECOMMENDED" : opt.rank === 2 ? "AGGRESSIVE" : "CONSERVATIVE";
 
   return (
@@ -189,7 +189,7 @@ function OptionCard({ opt, selected, onSelect }: { opt: DemoPrescriptiveOption; 
             <span>
               <span className="text-gray-300">{a.description}</span>
               {a.from && a.to && String(a.from) !== "current" && (
-                <span className="text-gray-500 ml-1">({String(a.from)} → {String(a.to)})</span>
+                <span className="text-gray-400 ml-1">({String(a.from)} → {String(a.to)})</span>
               )}
             </span>
           </div>
@@ -198,15 +198,15 @@ function OptionCard({ opt, selected, onSelect }: { opt: DemoPrescriptiveOption; 
 
       <div className="grid grid-cols-3 gap-1 mt-2 pt-2 border-t border-white/5">
         <div className="text-center">
-          <div className="text-[10px] text-gray-500">Risk</div>
+          <div className="text-[10px] text-gray-400">Risk</div>
           <div className="text-xs font-mono-data text-emerald-400">{opt.riskReduction.from}→{opt.riskReduction.to}%</div>
         </div>
         <div className="text-center">
-          <div className="text-[10px] text-gray-500">Net Save</div>
+          <div className="text-[10px] text-gray-400">Net Save</div>
           <div className="text-xs font-mono-data text-[#FF4D00]">${opt.netSavings.toLocaleString()}</div>
         </div>
         <div className="text-center">
-          <div className="text-[10px] text-gray-500">Confidence</div>
+          <div className="text-[10px] text-gray-400">Confidence</div>
           <div className="text-xs font-mono-data text-amber-400">{opt.successProbability}%</div>
         </div>
       </div>
@@ -237,7 +237,7 @@ function LeftPanel({ scenario, phase }: { scenario: DemoScenario; phase: number 
           { label: "EFFICIENCY", value: scenario.shiftMetrics.efficiency },
         ].map(({ label, value }) => (
           <div key={label} className="px-3 py-2 border-r border-white/8 last:border-r-0">
-            <div className="text-[9px] text-gray-500 font-mono-data">{label}</div>
+            <div className="text-[9px] text-gray-400 font-mono-data">{label}</div>
             <div className="text-xs font-bold text-white font-mono-data">{value}</div>
           </div>
         ))}
@@ -245,7 +245,7 @@ function LeftPanel({ scenario, phase }: { scenario: DemoScenario; phase: number 
 
       {/* Risk Bar */}
       <div className="px-4 py-3 border-b border-white/8">
-        <div className="text-[10px] text-gray-500 font-mono-data mb-2">{scenario.riskMetric.name}</div>
+        <div className="text-[10px] text-gray-400 font-mono-data mb-2">{scenario.riskMetric.name}</div>
         <RiskBar
           value={phase >= 1 ? scenario.riskMetric.peakValue : scenario.riskMetric.normalValue}
           max={scenario.riskMetric.peakValue * 1.15}
@@ -288,11 +288,11 @@ function RightPanel({ scenario, phase, selectedOpt, onSelectOpt }: {
         {phase === 0 && (
           <div className="space-y-4">
             <div>
-              <div className="text-[10px] text-gray-500 font-mono-data mb-1">SCENARIO</div>
+              <div className="text-[10px] text-gray-400 font-mono-data mb-1">SCENARIO</div>
               <div className="text-sm font-semibold text-white">{scenario.scenarioName}</div>
             </div>
             <div>
-              <div className="text-[10px] text-gray-500 font-mono-data mb-1">CONTEXT</div>
+              <div className="text-[10px] text-gray-400 font-mono-data mb-1">CONTEXT</div>
               <div className="text-xs text-gray-400 leading-relaxed">{scenario.description.slice(0, 220)}...</div>
             </div>
             <div className="p-3 rounded border border-emerald-500/20 bg-emerald-500/5">
@@ -304,7 +304,7 @@ function RightPanel({ scenario, phase, selectedOpt, onSelectOpt }: {
               </div>
             </div>
             <div className="p-3 rounded border border-white/10 bg-white/3">
-              <div className="text-[10px] text-gray-500 font-mono-data mb-1">ANNUAL COST AT RISK</div>
+              <div className="text-[10px] text-gray-400 font-mono-data mb-1">ANNUAL COST AT RISK</div>
               <div className="text-lg font-bold text-[#FF4D00]">{scenario.annualCostRange}</div>
             </div>
           </div>
@@ -318,7 +318,7 @@ function RightPanel({ scenario, phase, selectedOpt, onSelectOpt }: {
               <div className="text-xs text-gray-300">{scenario.predictiveAlert.message}</div>
             </div>
             <div className="p-3 rounded border border-white/10 bg-white/3">
-              <div className="text-[10px] text-gray-500 font-mono-data mb-1">PREDICTIVE vs PRESCRIPTIVE</div>
+              <div className="text-[10px] text-gray-400 font-mono-data mb-1">PREDICTIVE vs PRESCRIPTIVE</div>
               <div className="space-y-2 text-xs text-gray-400">
                 <div className="flex gap-2">
                   <span className="text-amber-400 shrink-0">⚠</span>
@@ -335,7 +335,7 @@ function RightPanel({ scenario, phase, selectedOpt, onSelectOpt }: {
 
         {phase === 2 && (
           <div className="space-y-3">
-            <div className="text-[10px] text-gray-500 font-mono-data">SELECT AN ACTION PATH</div>
+            <div className="text-[10px] text-gray-400 font-mono-data">SELECT AN ACTION PATH</div>
             {scenario.prescriptiveOptions.map((opt, i) => (
               <OptionCard key={opt.rank} opt={opt} selected={selectedOpt === i} onSelect={() => onSelectOpt(i)} />
             ))}
@@ -358,7 +358,7 @@ function RightPanel({ scenario, phase, selectedOpt, onSelectOpt }: {
                     </div>
                   </div>
                   <div>
-                    <div className="text-[10px] text-gray-500 font-mono-data mb-2">ANNUAL PROJECTION</div>
+                    <div className="text-[10px] text-gray-400 font-mono-data mb-2">ANNUAL PROJECTION</div>
                     <div className="grid grid-cols-2 gap-2">
                       {[
                         { label: "Incidents/yr", value: proj.incidentsPerYear.toLocaleString() },
@@ -367,23 +367,23 @@ function RightPanel({ scenario, phase, selectedOpt, onSelectOpt }: {
                         { label: "Platform Cost", value: `$${(proj.platformCost / 1000).toFixed(0)}K/yr` },
                       ].map(({ label, value }) => (
                         <div key={label} className="p-2 rounded border border-white/8 bg-white/3">
-                          <div className="text-[9px] text-gray-500 font-mono-data">{label}</div>
+                          <div className="text-[9px] text-gray-400 font-mono-data">{label}</div>
                           <div className="text-sm font-bold text-white font-mono-data">{value}</div>
                         </div>
                       ))}
                     </div>
                   </div>
                   <div className="p-3 rounded border border-[#FF4D00]/30 bg-[#FF4D00]/8">
-                    <div className="text-[10px] text-gray-500 font-mono-data mb-1">NET ANNUAL SAVINGS</div>
+                    <div className="text-[10px] text-gray-400 font-mono-data mb-1">NET ANNUAL SAVINGS</div>
                     <div className="text-2xl font-bold text-[#FF4D00]">
                       ${(proj.netAnnualSavings / 1000000).toFixed(2)}M
                     </div>
-                    <div className="text-[10px] text-gray-500 mt-1">
+                    <div className="text-[10px] text-gray-400 mt-1">
                       {scenario.annualCostRange} annual cost at risk
                     </div>
                   </div>
                   <div className="p-2 rounded border border-white/8 bg-white/3 text-xs text-gray-400">
-                    <span className="text-gray-500">Tradeoff: </span>{opt.tradeoff}
+                    <span className="text-gray-400">Tradeoff: </span>{opt.tradeoff}
                   </div>
                 </>
               );
@@ -437,7 +437,7 @@ function DemoEngine({ scenario }: { scenario: DemoScenario }) {
         <button
           onClick={() => setMobileTab("observe")}
           className={`flex-1 py-2.5 text-[10px] font-mono-data font-bold tracking-wider text-center transition-all ${
-            mobileTab === "observe" ? "bg-white/5 text-white" : "text-gray-500"
+            mobileTab === "observe" ? "bg-white/5 text-white" : "text-gray-400"
           }`}
         >
           OBSERVE
@@ -445,7 +445,7 @@ function DemoEngine({ scenario }: { scenario: DemoScenario }) {
         <button
           onClick={() => setMobileTab("predict")}
           className={`flex-1 py-2.5 text-[10px] font-mono-data font-bold tracking-wider text-center transition-all border-l border-white/8 ${
-            mobileTab === "predict" ? "bg-white/5 text-white" : "text-gray-500"
+            mobileTab === "predict" ? "bg-white/5 text-white" : "text-gray-400"
           }`}
         >
           {phase >= 2 ? "PRESCRIBE" : "PREDICT"}
@@ -478,7 +478,7 @@ function DemoEngine({ scenario }: { scenario: DemoScenario }) {
         >
           ← PREV
         </button>
-        <div className="text-[10px] text-gray-600 font-mono-data">
+        <div className="text-[10px] text-gray-400 font-mono-data">
           Phase {phase + 1} / 4 — {phaseNames[phase]}
         </div>
         <button
@@ -518,7 +518,7 @@ export default function Demo() {
           <span className="text-base font-bold tracking-tight text-white group-hover:text-[#FF4D00] transition-colors">
             GAINTROPY
           </span>
-          <span className="text-gray-600 text-sm">/ Interactive Demo</span>
+          <span className="text-gray-400 text-sm">/ Interactive Demo</span>
         </Link>
         <Link
           href="/#waitlist"
@@ -533,7 +533,7 @@ export default function Demo() {
         <h1 className="text-lg md:text-xl font-bold text-white">
           Prescriptive Operations Intelligence
         </h1>
-        <p className="text-xs text-gray-500 mt-0.5">
+        <p className="text-xs text-gray-400 mt-0.5">
           {INDUSTRY_CONFIGS.length * 35} live scenarios across {INDUSTRY_CONFIGS.length} industries — select any to explore
         </p>
       </div>
@@ -561,7 +561,7 @@ export default function Demo() {
 
       {/* Mobile scenario selector (horizontal scroll) */}
       <div className="md:hidden px-4 py-2 border-b border-white/8 shrink-0 overflow-x-auto">
-        <div className="text-[10px] text-gray-500 font-mono-data tracking-wider mb-2">SCENARIOS</div>
+        <div className="text-[10px] text-gray-400 font-mono-data tracking-wider mb-2">SCENARIOS</div>
         <div className="flex gap-2">
           {scenariosForIndustry.map((s, i) => (
             <button
@@ -573,7 +573,7 @@ export default function Demo() {
                   : "border-white/10 hover:border-white/20"
               }`}
             >
-              <div className="text-[10px] text-gray-600 font-mono-data">#{i + 1}</div>
+              <div className="text-[10px] text-gray-400 font-mono-data">#{i + 1}</div>
               <div className="text-xs text-gray-300 leading-tight mt-0.5 whitespace-nowrap">{s.scenarioName}</div>
             </button>
           ))}
@@ -585,7 +585,7 @@ export default function Demo() {
         {/* Scenario list (desktop only) */}
         <div className="hidden md:flex w-64 shrink-0 border-r border-white/8 flex-col min-h-0">
           <div className="px-3 py-2 border-b border-white/8">
-            <div className="text-[10px] text-gray-500 font-mono-data tracking-wider">SCENARIOS</div>
+            <div className="text-[10px] text-gray-400 font-mono-data tracking-wider">SCENARIOS</div>
           </div>
           <div className="flex-1 overflow-y-auto">
             {scenariosForIndustry.map((s, i) => (
@@ -598,9 +598,9 @@ export default function Demo() {
                     : "hover:bg-white/3"
                 }`}
               >
-                <div className="text-[10px] text-gray-600 font-mono-data">#{i + 1}</div>
+                <div className="text-[10px] text-gray-400 font-mono-data">#{i + 1}</div>
                 <div className="text-xs text-gray-300 leading-tight mt-0.5">{s.scenarioName}</div>
-                <div className="text-[10px] text-gray-600 mt-0.5">{s.annualCostRange}</div>
+                <div className="text-[10px] text-gray-400 mt-0.5">{s.annualCostRange}</div>
               </button>
             ))}
           </div>
