@@ -202,7 +202,7 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
                 Accepted Loss
               </div>
               <div
-                className="text-sm md:text-base font-bold font-mono-data leading-tight whitespace-nowrap"
+                className="text-sm md:text-base font-bold font-mono-data leading-tight lg:whitespace-nowrap"
                 style={{ color: "#FF4D00" }}
               >
                 {archetype.acceptedLoss}
@@ -379,7 +379,7 @@ export default function Explorer() {
       </div>
 
       {/* Step indicator bar */}
-      <div className="px-4 md:px-6 py-3 border-b flex items-center gap-4 shrink-0 overflow-x-auto" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+      <div className="px-4 md:px-6 py-3 border-b flex items-center gap-2 md:gap-4 shrink-0 overflow-x-auto" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
         {[
           { n: 1, label: "Industry" },
           { n: 2, label: "Plant Config" },

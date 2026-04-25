@@ -513,7 +513,7 @@ export default function Demo() {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       {/* Nav */}
-      <header className="border-b border-white/8 px-6 py-3 flex items-center justify-between shrink-0">
+      <header className="border-b border-white/8 px-4 md:px-6 py-3 flex items-center justify-between shrink-0">
         <Link href="/" className="flex items-center gap-2 group">
           <span className="text-base font-bold tracking-tight text-white group-hover:text-[#FF4D00] transition-colors">
             GAINTROPY
@@ -529,8 +529,8 @@ export default function Demo() {
       </header>
 
       {/* Title bar */}
-      <div className="px-6 py-4 border-b border-white/8 shrink-0">
-        <h1 className="text-xl font-bold text-white">
+      <div className="px-4 md:px-6 py-4 border-b border-white/8 shrink-0">
+        <h1 className="text-lg md:text-xl font-bold text-white">
           Prescriptive Operations Intelligence
         </h1>
         <p className="text-xs text-gray-500 mt-0.5">
@@ -539,7 +539,7 @@ export default function Demo() {
       </div>
 
       {/* Industry Grid */}
-      <div className="px-6 py-3 border-b border-white/8 shrink-0">
+      <div className="px-4 md:px-6 py-3 border-b border-white/8 shrink-0">
         <div className="flex flex-wrap gap-1.5">
           {INDUSTRY_CONFIGS.map((ind) => (
             <button

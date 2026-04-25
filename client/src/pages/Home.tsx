@@ -985,7 +985,7 @@ function Navbar() {
         borderBottom: scrolled ? "1px solid rgba(255,255,255,0.05)" : "none",
       }}
     >
-      <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-5 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2.5 group">
           <img
@@ -1041,7 +1041,7 @@ function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden px-6 pb-5 flex flex-col gap-4"
+            className="md:hidden px-4 pb-5 flex flex-col gap-4"
             style={{ background: "rgba(10,10,10,0.97)", borderTop: "1px solid rgba(255,255,255,0.06)" }}
           >
             <button
@@ -1102,7 +1102,7 @@ function Hero() {
         }}
       />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-36 pb-24">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-6 pt-20 md:pt-36 pb-16 md:pb-24">
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
@@ -1126,7 +1126,7 @@ function Hero() {
           transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
           className="font-display font-black leading-[0.95] mb-8"
           style={{
-            fontSize: "clamp(3.5rem, 10vw, 8rem)",
+            fontSize: "clamp(2.25rem, 8vw, 8rem)",
             fontFamily: "Space Grotesk, sans-serif",
             letterSpacing: "-0.03em",
             color: "#FFFFFF",
@@ -1164,7 +1164,7 @@ function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.45, ease: "easeOut" }}
-          className="flex flex-wrap items-center gap-4"
+          className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-4"
         >
           <button
             onClick={() => document.getElementById("access")?.scrollIntoView({ behavior: "smooth" })}
@@ -1213,7 +1213,7 @@ function TheMoment() {
       className="py-40"
       style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
     >
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
         {/* Section label */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -1250,7 +1250,7 @@ function TheMoment() {
             initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="p-10 flex flex-col"
+            className="p-5 md:p-10 flex flex-col"
             style={{ background: "#0A0A0A" }}
           >
             <div
@@ -1310,7 +1310,7 @@ function TheMoment() {
             initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="p-10 flex flex-col"
+            className="p-5 md:p-10 flex flex-col"
             style={{ background: "#0D0D0D" }}
           >
             <div
@@ -1416,7 +1416,7 @@ function InteractiveDemo() {
       className="py-32"
       style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
     >
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -1483,7 +1483,7 @@ function InteractiveDemo() {
               </p>
             </div>
           ) : (
-            <div className="p-8">
+            <div className="p-4 md:p-8">
               {/* Stage indicator */}
               <div className="flex items-center gap-6 mb-8">
                 {(["observe", "predict", "prescribe"] as const).map((stage, i) => {
@@ -1721,7 +1721,7 @@ function IndustryTicker() {
       className="py-24 overflow-hidden"
       style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
     >
-      <div className="max-w-6xl mx-auto px-6 mb-10">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 mb-10">
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
@@ -1740,11 +1740,11 @@ function IndustryTicker() {
         className="relative space-y-4"
       >
         <div
-          className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+          className="absolute left-0 top-0 bottom-0 w-12 md:w-24 z-10 pointer-events-none"
           style={{ background: "linear-gradient(to right, #0A0A0A, transparent)" }}
         />
         <div
-          className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+          className="absolute right-0 top-0 bottom-0 w-12 md:w-24 z-10 pointer-events-none"
           style={{ background: "linear-gradient(to left, #0A0A0A, transparent)" }}
         />
 
@@ -1806,7 +1806,7 @@ function KnowledgeDrain() {
       className="py-40"
       style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
     >
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -1878,7 +1878,7 @@ function Credibility() {
       className="py-32"
       style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
     >
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
         <div className="grid md:grid-cols-3 gap-px" style={{ background: "rgba(255,255,255,0.06)" }}>
           {blocks.map((block, i) => (
             <motion.div
@@ -1886,7 +1886,7 @@ function Credibility() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.12 }}
-              className="p-8"
+              className="p-4 md:p-8"
               style={{ background: "#0A0A0A" }}
             >
               <div
@@ -1940,7 +1940,7 @@ function NamePhilosophy() {
       className="py-40"
       style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
     >
-      <div className="max-w-2xl mx-auto px-6 text-center">
+      <div className="max-w-2xl mx-auto px-4 md:px-6 text-center">
         {lines.map((line, i) => (
           <motion.p
             key={i}
@@ -2005,7 +2005,7 @@ function Access() {
       className="py-40"
       style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
     >
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
         <div className="max-w-xl">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -2203,7 +2203,7 @@ function Footer() {
       className="py-10"
       style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
     >
-      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center gap-2.5">
           <img src={LOGO_URL} alt="Gaintropy" width={28} height={28} className="w-7 h-7 object-contain opacity-70" loading="lazy" />
           <span className="text-sm" style={{ color: "rgba(255,255,255,0.25)", fontFamily: "Space Grotesk, sans-serif" }}>
