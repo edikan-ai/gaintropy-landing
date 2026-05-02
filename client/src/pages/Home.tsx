@@ -1206,7 +1206,7 @@ function Hero() {
             className="flex items-center gap-2 text-sm transition-colors duration-200"
             style={{ color: "var(--g-text-secondary)", fontFamily: "Space Grotesk, sans-serif" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "var(--g-text)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--g-text-secondary)")}
           >
             Request a live walkthrough
           </button>
@@ -1317,7 +1317,7 @@ function TheMoment() {
                   </div>
                 </div>
               </div>
-              <div className="mt-6 pt-5 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+              <div className="mt-6 pt-5 border-t" style={{ borderColor: "var(--g-card-border)" }}>
                 <div className="text-xs italic" style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}>
                   . . .
                 </div>
@@ -1364,8 +1364,8 @@ function TheMoment() {
                   transition={{ duration: 0.5, delay: p.delay }}
                   className="p-4 rounded-sm flex items-center justify-between gap-4"
                   style={{
-                    background: p.rank === "01" ? "rgba(0,212,255,0.04)" : "rgba(255,255,255,0.02)",
-                    border: `1px solid ${p.rank === "01" ? "rgba(0,212,255,0.15)" : "rgba(255,255,255,0.05)"}`,
+                    background: p.rank === "01" ? "rgba(0,212,255,0.06)" : isDark ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.02)",
+                    border: `1px solid ${p.rank === "01" ? "rgba(0,212,255,0.15)" : "var(--g-card-border)"}`,
                   }}
                 >
                   <div className="flex items-center gap-3 min-w-0">
@@ -1419,6 +1419,8 @@ function TheMoment() {
 function InteractiveDemo() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [selectedIndustry, setSelectedIndustry] = useState<string>("");
   const [demoStage, setDemoStage] = useState<"idle" | "observe" | "predict" | "prescribe">("idle");
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -1478,13 +1480,13 @@ function InteractiveDemo() {
               onChange={(e) => setSelectedIndustry(e.target.value)}
               className="w-full px-4 py-3.5 text-sm rounded-sm outline-none appearance-none transition-all duration-200"
               style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                color: selectedIndustry ? "#FFFFFF" : "rgba(255,255,255,0.35)",
+                background: "var(--g-card-bg)",
+                border: "1px solid var(--g-card-border)",
+                color: selectedIndustry ? "var(--g-text)" : "var(--g-text-dim)",
                 fontFamily: "Space Grotesk, sans-serif",
               }}
               onFocus={(e) => (e.target.style.borderColor = "rgba(255,77,0,0.4)")}
-              onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.12)")}
+              onBlur={(e) => (e.target.style.borderColor = "var(--g-card-border)")}
             >
               <option value="" disabled style={{ background: "var(--g-card-bg)" }}>Select your industry</option>
               {INDUSTRIES.map((ind) => (
@@ -1501,13 +1503,13 @@ function InteractiveDemo() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2 }}
           className="rounded-sm overflow-hidden"
-          style={{ border: "1px solid var(--g-card-border)", background: "#0D0D0D" }}
+          style={{ border: "1px solid var(--g-card-border)", background: "var(--g-card-bg)" }}
         >
           {!selectedIndustry ? (
             <div className="flex items-center justify-center py-24">
               <p
                 className="text-sm"
-                style={{ color: "rgba(255,255,255,0.15)", fontFamily: "Space Grotesk, sans-serif", fontStyle: "italic" }}
+                style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif", fontStyle: "italic" }}
               >
                 Select your industry to see Gaintropy in action.
               </p>
@@ -1527,20 +1529,20 @@ function InteractiveDemo() {
                       <div
                         className="w-2 h-2 rounded-full transition-all duration-500"
                         style={{
-                          background: isCurrent ? "#FF4D00" : isPast ? "#00D4FF" : "rgba(255,255,255,0.1)",
+                          background: isCurrent ? "#FF4D00" : isPast ? "#00D4FF" : "var(--g-card-border)",
                         }}
                       />
                       <span
                         className="text-xs tracking-widest uppercase"
                         style={{
-                          color: isCurrent ? "#FFFFFF" : isPast ? "rgba(0,212,255,0.7)" : "rgba(255,255,255,0.2)",
+                          color: isCurrent ? "var(--g-text)" : isPast ? "rgba(0,212,255,0.7)" : "var(--g-text-dim)",
                           fontFamily: "Space Grotesk, sans-serif",
                         }}
                       >
                         {stage}
                       </span>
                       {i < 2 && (
-                        <div className="w-8 h-px ml-1" style={{ background: isPast ? "rgba(0,212,255,0.3)" : "rgba(255,255,255,0.08)" }} />
+                        <div className="w-8 h-px ml-1" style={{ background: isPast ? "rgba(0,212,255,0.3)" : "var(--g-card-border)" }} />
                       )}
                     </div>
                   );
@@ -1560,14 +1562,14 @@ function InteractiveDemo() {
                       style={{
                         background: sensor.alert && (demoStage === "predict" || demoStage === "prescribe")
                           ? "rgba(255,77,0,0.06)"
-                          : "rgba(255,255,255,0.03)",
-                        border: `1px solid ${sensor.alert && (demoStage === "predict" || demoStage === "prescribe") ? "rgba(255,77,0,0.25)" : "rgba(255,255,255,0.06)"}`,
+                          : isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.02)",
+                        border: `1px solid ${sensor.alert && (demoStage === "predict" || demoStage === "prescribe") ? "rgba(255,77,0,0.25)" : "var(--g-card-border)"}`,
                         transition: "all 0.5s ease",
                       }}
                     >
                       <div
                         className="text-xs mb-1"
-                        style={{ color: "rgba(255,255,255,0.35)", fontFamily: "Space Grotesk, sans-serif" }}
+                        style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
                       >
                         {sensor.name}
                       </div>
@@ -1577,7 +1579,7 @@ function InteractiveDemo() {
                           fontFamily: "JetBrains Mono, monospace",
                           color: sensor.alert && (demoStage === "predict" || demoStage === "prescribe")
                             ? "#FF4D00"
-                            : "#FFFFFF",
+                            : "var(--g-text)",
                           transition: "color 0.5s ease",
                         }}
                       >
@@ -1648,8 +1650,8 @@ function InteractiveDemo() {
                         transition={{ duration: 0.4, delay: i * 0.12 }}
                         className="p-4 rounded-sm flex items-center justify-between gap-4"
                         style={{
-                          background: p.rank === "01" ? "rgba(0,212,255,0.04)" : "rgba(255,255,255,0.02)",
-                          border: `1px solid ${p.rank === "01" ? "rgba(0,212,255,0.15)" : "rgba(255,255,255,0.05)"}`,
+                          background: p.rank === "01" ? "rgba(0,212,255,0.06)" : isDark ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.02)",
+                          border: `1px solid ${p.rank === "01" ? "rgba(0,212,255,0.15)" : "var(--g-card-border)"}`,
                         }}
                       >
                         <div className="flex items-center gap-3 min-w-0">
@@ -1687,7 +1689,7 @@ function InteractiveDemo() {
 
         <p
           className="mt-4 text-xs italic text-center"
-          style={{ color: "rgba(255,255,255,0.15)", fontFamily: "Space Grotesk, sans-serif" }}
+          style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
         >
           Simulated scenario. Actual recommendations are generated from your live plant data.
         </p>
@@ -1701,6 +1703,8 @@ function InteractiveDemo() {
 function IndustryTicker() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [hoveredIndustry, setHoveredIndustry] = useState<string | null>(null);
   const [paused, setPaused] = useState(false);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
@@ -1731,7 +1735,7 @@ function IndustryTicker() {
         <span
           className="px-8 text-sm font-medium transition-colors duration-200"
           style={{
-            color: hoveredIndustry === name ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.35)",
+            color: hoveredIndustry === name ? "var(--g-text-secondary)" : "var(--g-text-dim)",
             fontFamily: "Space Grotesk, sans-serif",
             letterSpacing: "0.02em",
             cursor: "default",
@@ -1808,10 +1812,11 @@ function IndustryTicker() {
               left: tooltipPos.x + 12,
               top: tooltipPos.y - 40,
               background: "var(--g-card-bg)",
-              border: "1px solid rgba(255,255,255,0.1)",
+              border: "1px solid var(--g-card-border)",
+              boxShadow: isDark ? "0 4px 12px rgba(0,0,0,0.5)" : "0 4px 12px rgba(0,0,0,0.1)",
             }}
           >
-            <div className="text-xs" style={{ color: "rgba(255,255,255,0.5)", fontFamily: "Space Grotesk, sans-serif", whiteSpace: "nowrap" }}>
+            <div className="text-xs" style={{ color: "var(--g-text-secondary)", fontFamily: "Space Grotesk, sans-serif", whiteSpace: "nowrap" }}>
               Avg. recovered:{" "}
               <span style={{ color: "#FF4D00", fontFamily: "JetBrains Mono, monospace" }}>
                 {INDUSTRY_RECOVERY[hoveredIndustry] ?? "$1.5M"}/year
@@ -1909,7 +1914,7 @@ function Credibility() {
       style={{ background: "var(--g-page-bg)", borderTop: "1px solid var(--g-card-border)" }}
     >
       <div className="max-w-6xl mx-auto px-4 md:px-6">
-        <div className="grid md:grid-cols-3 gap-px" style={{ background: "rgba(255,255,255,0.06)" }}>
+        <div className="grid md:grid-cols-3 gap-px" style={{ background: "var(--g-card-border)" }}>
           {blocks.map((block, i) => (
             <motion.div
               key={i}
@@ -1933,7 +1938,7 @@ function Credibility() {
               </h3>
               <p
                 className="text-sm leading-relaxed"
-                style={{ color: "rgba(255,255,255,0.35)", fontFamily: "Space Grotesk, sans-serif" }}
+                style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
               >
                 {block.body}
               </p>
@@ -2115,13 +2120,13 @@ function Access() {
                       onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
                       className="w-full px-4 py-3.5 text-sm rounded-sm outline-none transition-all duration-200"
                       style={{
-                        background: "rgba(255,255,255,0.04)",
-                        border: "1px solid rgba(255,255,255,0.08)",
+                        background: "var(--g-card-bg)",
+                        border: "1px solid var(--g-card-border)",
                         color: "var(--g-text)",
                         fontFamily: "Space Grotesk, sans-serif",
                       }}
                       onFocus={(e) => (e.target.style.borderColor = "rgba(255,77,0,0.4)")}
-                      onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.08)")}
+                      onBlur={(e) => (e.target.style.borderColor = "var(--g-card-border)")}
                     />
                   </div>
                 ))}
@@ -2141,13 +2146,13 @@ function Access() {
                     onChange={(e) => setForm({ ...form, industry: e.target.value })}
                     className="w-full px-4 py-3.5 text-sm rounded-sm outline-none transition-all duration-200"
                     style={{
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(255,255,255,0.08)",
-                      color: form.industry ? "#FFFFFF" : "rgba(255,255,255,0.25)",
+                      background: "var(--g-card-bg)",
+                      border: "1px solid var(--g-card-border)",
+                      color: form.industry ? "var(--g-text)" : "var(--g-text-dim)",
                       fontFamily: "Space Grotesk, sans-serif",
                     }}
                     onFocus={(e) => (e.target.style.borderColor = "rgba(255,77,0,0.4)")}
-                    onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.08)")}
+                    onBlur={(e) => (e.target.style.borderColor = "var(--g-card-border)")}
                   >
                     <option value="" disabled style={{ background: "var(--g-card-bg)" }}>Select your industry</option>
                     {INDUSTRIES.map((ind) => (
@@ -2177,9 +2182,9 @@ function Access() {
                         className="py-2.5 px-3 text-xs font-semibold rounded-sm transition-all duration-200"
                         style={{
                           fontFamily: "Space Grotesk, sans-serif",
-                          background: form.requestType === opt.value ? "rgba(255,77,0,0.12)" : "rgba(255,255,255,0.04)",
-                          border: `1px solid ${form.requestType === opt.value ? "rgba(255,77,0,0.5)" : "rgba(255,255,255,0.08)"}`,
-                          color: form.requestType === opt.value ? "#FF4D00" : "rgba(255,255,255,0.35)",
+                          background: form.requestType === opt.value ? "rgba(255,77,0,0.12)" : "var(--g-card-bg)",
+                          border: `1px solid ${form.requestType === opt.value ? "rgba(255,77,0,0.5)" : "var(--g-card-border)"}`,
+                          color: form.requestType === opt.value ? "#FF4D00" : "var(--g-text-dim)",
                         }}
                       >
                         {opt.label}
@@ -2212,7 +2217,7 @@ function Access() {
 
                 <p
                   className="text-xs text-center pt-1"
-                  style={{ color: "rgba(255,255,255,0.18)", fontFamily: "Space Grotesk, sans-serif" }}
+                  style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
                 >
                   We respond within 48 hours.
                 </p>
@@ -2248,8 +2253,8 @@ function Footer() {
             href="mailto:hello@gaintropy.com"
             className="text-xs transition-colors duration-200"
             style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.5)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.2)")}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--g-text-secondary)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--g-text-dim)")}
           >
             hello@gaintropy.com
           </a>
@@ -2257,8 +2262,8 @@ function Footer() {
             onClick={() => document.getElementById("access")?.scrollIntoView({ behavior: "smooth" })}
             className="flex items-center gap-1.5 text-xs transition-colors duration-200"
             style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.5)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.2)")}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--g-text-secondary)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--g-text-dim)")}
           >
             Request a walkthrough
           </button>
