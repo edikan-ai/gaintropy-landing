@@ -7,7 +7,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ArrowRight, ExternalLink, Menu, X, ChevronDown } from "lucide-react";
+import { ArrowRight, ExternalLink, Menu, X, ChevronDown, Sun, Moon } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
 
 // ─── ASSETS ───────────────────────────────────────────────────────────────────
 
@@ -968,6 +969,8 @@ function MoneyCounter() {
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -979,10 +982,10 @@ function Navbar() {
     <nav
       className="fixed left-0 right-0 z-50 transition-all duration-500"
       style={{
-        top: "28px", // offset for money counter bar
-        background: scrolled ? "rgba(10,10,10,0.92)" : "transparent",
+        top: "28px",
+        background: scrolled ? "var(--g-overlay-bg)" : "transparent",
         backdropFilter: scrolled ? "blur(16px)" : "none",
-        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.05)" : "none",
+        borderBottom: scrolled ? "1px solid var(--g-card-border)" : "none",
       }}
     >
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-5 flex items-center justify-between">
@@ -994,25 +997,37 @@ function Navbar() {
             width={32}
             height={32}
             className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-105"
+            style={{ filter: isDark ? "none" : "invert(1)" }}
           />
           <span
             className="font-display font-bold text-base tracking-tight"
-            style={{ color: "#FFFFFF", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--g-logo-text)", fontFamily: "Space Grotesk, sans-serif" }}
           >
             Gaintropy
           </span>
         </a>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6">
           <button
             onClick={() => document.getElementById("access")?.scrollIntoView({ behavior: "smooth" })}
             className="flex items-center gap-1.5 text-sm transition-colors duration-200"
-            style={{ color: "rgba(255,255,255,0.45)", fontFamily: "Space Grotesk, sans-serif" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#FFFFFF")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
+            style={{ color: "var(--g-text-secondary)", fontFamily: "Space Grotesk, sans-serif" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--g-text)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--g-text-secondary)")}
           >
             Request a walkthrough
+          </button>
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            className="w-8 h-8 rounded-sm flex items-center justify-center transition-colors duration-200"
+            style={{ color: "var(--g-text-secondary)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--g-text)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--g-text-secondary)")}
+          >
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
           </button>
           <button
             onClick={() => document.getElementById("access")?.scrollIntoView({ behavior: "smooth" })}
@@ -1023,15 +1038,24 @@ function Navbar() {
           </button>
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden"
-          style={{ color: "rgba(255,255,255,0.7)" }}
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
-        >
-          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        {/* Mobile toggle + theme */}
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            onClick={toggleTheme}
+            title={isDark ? "Light mode" : "Dark mode"}
+            className="w-8 h-8 rounded-sm flex items-center justify-center"
+            style={{ color: "var(--g-text-secondary)" }}
+          >
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+          <button
+            style={{ color: "var(--g-text-secondary)" }}
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          >
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -1042,11 +1066,11 @@ function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden px-4 pb-5 flex flex-col gap-4"
-            style={{ background: "rgba(10,10,10,0.97)", borderTop: "1px solid rgba(255,255,255,0.06)" }}
+            style={{ background: "var(--g-overlay-bg)", borderTop: "1px solid var(--g-card-border)" }}
           >
             <button
               className="text-sm py-2 text-left"
-              style={{ color: "rgba(255,255,255,0.5)", fontFamily: "Space Grotesk, sans-serif" }}
+              style={{ color: "var(--g-text-secondary)", fontFamily: "Space Grotesk, sans-serif" }}
               onClick={() => {
                 setMobileOpen(false);
                 document.getElementById("access")?.scrollIntoView({ behavior: "smooth" });
@@ -1129,7 +1153,7 @@ function Hero() {
             fontSize: "clamp(2.25rem, 8vw, 8rem)",
             fontFamily: "Space Grotesk, sans-serif",
             letterSpacing: "-0.03em",
-            color: "#FFFFFF",
+            color: "var(--g-text)",
           }}
         >
           We turn
