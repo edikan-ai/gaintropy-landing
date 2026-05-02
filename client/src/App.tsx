@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 
 const Demo = lazy(() => import("./pages/Demo"));
 const Explorer = lazy(() => import("./pages/Explorer"));
+const Calculator = lazy(() => import("./calculator/CalculatorPage"));
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
       {/* Problem Library Explorer — accessible by direct URL only,
           intentionally not linked from the homepage navigation. */}
       <Route path={"/explore"} component={Explorer} />
+      <Route path={"/calculator"} component={Calculator} />
       <Route path={"/library"} component={Explorer} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
