@@ -1,5 +1,7 @@
 import { useState, useMemo } from "react";
 import { Link } from "wouter";
+import { Sun, Moon } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
 import atlasData from "@/data/atlas-data.json";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -115,8 +117,8 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
     <article
       className="rounded-lg border transition-colors overflow-hidden"
       style={{
-        borderColor: expanded ? "rgba(255,77,0,0.45)" : "#2A2A2A",
-        background: "#141414",
+        borderColor: expanded ? "rgba(255,77,0,0.45)" : "var(--g-card-border)",
+        background: "var(--g-card-bg)",
       }}
     >
       <button onClick={onToggle} className="w-full text-left block p-5 cursor-pointer">
@@ -150,7 +152,7 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
               <h3
                 className="text-sm md:text-[15px] font-semibold leading-snug"
                 style={{
-                  color: "#F5F5F5",
+                  color: "var(--g-text)",
                   fontFamily: "Space Grotesk, sans-serif",
                   // Critical: never break inside a word, always wrap on whitespace
                   wordBreak: "normal",
@@ -220,7 +222,7 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
       {expanded && (
         <div
           className="px-5 pb-5 border-t"
-          style={{ borderColor: "#2A2A2A" }}
+          style={{ borderColor: "var(--g-card-border)" }}
         >
           {/* Operator description */}
           <div className="mt-4 mb-5">
@@ -295,6 +297,20 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
 
 // ─── Main Explorer Page ──────────────────────────────────────────────────────
 
+function ThemeToggleExplorer() {
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
+  return (
+    <button
+      onClick={toggleTheme}
+      title={isDark ? "Light mode" : "Dark mode"}
+      className="w-8 h-8 rounded-sm flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+    >
+      {isDark ? <Sun size={16} /> : <Moon size={16} />}
+    </button>
+  );
+}
+
 export default function Explorer() {
   const [step, setStep] = useState(1);
   const [selectedIndustry, setSelectedIndustry] = useState("steel");
@@ -350,27 +366,30 @@ export default function Explorer() {
     : processStages;
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#0A0A0A", color: "#FFFFFF" }}>
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
       {/* Header */}
-      <header className="border-b px-4 md:px-6 py-3 flex items-center justify-between shrink-0" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+      <header className="border-b border-border px-4 md:px-6 py-3 flex items-center justify-between shrink-0">
         <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-base font-bold tracking-tight text-white group-hover:text-[#FF4D00] transition-colors" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
+          <span className="text-base font-bold tracking-tight text-foreground group-hover:text-[#FF4D00] transition-colors" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
             GAINTROPY
           </span>
-          <span className="text-gray-400 text-sm">/ Problem Library</span>
+          <span className="text-muted-foreground text-sm">/ Problem Library</span>
         </Link>
-        <Link
-          href="/#access"
-          className="text-xs font-mono-data px-4 py-1.5 rounded border transition-all"
-          style={{ borderColor: "#FF4D00", color: "#FF4D00" }}
-        >
-          REQUEST ACCESS
-        </Link>
+        <div className="flex items-center gap-3">
+          <ThemeToggleExplorer />
+          <Link
+            href="/#access"
+            className="text-xs font-mono-data px-4 py-1.5 rounded border transition-all"
+            style={{ borderColor: "#FF4D00", color: "#FF4D00" }}
+          >
+            REQUEST ACCESS
+          </Link>
+        </div>
       </header>
 
       {/* Title */}
-      <div className="px-4 md:px-6 py-5 border-b shrink-0" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-        <h1 className="text-lg md:text-xl font-bold text-white" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
+      <div className="px-4 md:px-6 py-5 border-b border-border shrink-0">
+        <h1 className="text-lg md:text-xl font-bold text-foreground" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
           Problem Library Explorer
         </h1>
         <p className="text-xs text-gray-400 mt-1" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
@@ -379,7 +398,7 @@ export default function Explorer() {
       </div>
 
       {/* Step indicator bar */}
-      <div className="px-4 md:px-6 py-3 border-b flex items-center gap-2 md:gap-4 shrink-0 overflow-x-auto" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+      <div className="px-4 md:px-6 py-3 border-b flex items-center gap-2 md:gap-4 shrink-0 overflow-x-auto" style={{ borderColor: "var(--g-card-border)" }}>
         {[
           { n: 1, label: "Industry" },
           { n: 2, label: "Plant Config" },
@@ -463,7 +482,7 @@ export default function Explorer() {
                     background: selectedMill === mill.id ? "rgba(255,77,0,0.08)" : "rgba(255,255,255,0.02)",
                   }}
                 >
-                  <div className="text-sm font-semibold text-white mb-1" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
+                  <div className="text-sm font-semibold text-foreground mb-1" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
                     {mill.name}
                   </div>
                   <div className="text-[10px] font-mono-data" style={{ color: "#00D4FF" }}>
@@ -518,19 +537,19 @@ export default function Explorer() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
                   <div>
                     <div className="text-gray-400 font-mono-data text-[9px]">FREQUENCY</div>
-                    <div className="text-white font-mono-data">{matchingInfra.frequency}</div>
+                    <div className="text-foreground font-mono-data">{matchingInfra.frequency}</div>
                   </div>
                   <div>
                     <div className="text-gray-400 font-mono-data text-[9px]">DEPLOYMENT</div>
-                    <div className="text-white font-mono-data">{matchingInfra.deploymentWeeks} weeks</div>
+                    <div className="text-foreground font-mono-data">{matchingInfra.deploymentWeeks} weeks</div>
                   </div>
                   <div>
                     <div className="text-gray-400 font-mono-data text-[9px]">PROTOCOLS</div>
-                    <div className="text-white font-mono-data">{matchingInfra.protocols.slice(0, 2).join(", ")}</div>
+                    <div className="text-foreground font-mono-data">{matchingInfra.protocols.slice(0, 2).join(", ")}</div>
                   </div>
                   <div>
                     <div className="text-gray-400 font-mono-data text-[9px]">DATABASE</div>
-                    <div className="text-white font-mono-data truncate">{matchingInfra.database.split(",")[0]}</div>
+                    <div className="text-foreground font-mono-data truncate">{matchingInfra.database.split(",")[0]}</div>
                   </div>
                 </div>
               </div>

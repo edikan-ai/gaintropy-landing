@@ -1,10 +1,26 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
+import { Sun, Moon } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
 import { type DemoScenario, type DemoPrescriptiveOption } from "@/data/demoTypes";
 import { INDUSTRY_CONFIGS, type IndustryConfig } from "@/data/industryConfigs";
 import { generateScenariosForIndustry } from "@/data/scenarioEngine";
 
 // ─── constants ────────────────────────────────────────────────────────────────
+function DemoThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
+  return (
+    <button
+      onClick={toggleTheme}
+      title={isDark ? "Light mode" : "Dark mode"}
+      className="w-8 h-8 rounded-sm flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+    >
+      {isDark ? <Sun size={16} /> : <Moon size={16} />}
+    </button>
+  );
+}
+
 const PHASE_LABELS = [
   { left: "OBSERVE: Live Process Data", right: "PREDICT: Baseline Normal" },
   { left: "OBSERVE: Anomaly Detected", right: "PREDICT: Alert Issued" },
@@ -179,7 +195,7 @@ function OptionCard({ opt, selected, onSelect }: { opt: DemoPrescriptiveOption; 
         >
           {rankLabel}
         </span>
-        <span className="text-sm font-semibold text-white">{opt.title}</span>
+        <span className="text-sm font-semibold text-foreground">{opt.title}</span>
       </div>
 
       <div className="space-y-1 mb-2">
@@ -221,30 +237,30 @@ function LeftPanel({ scenario, phase }: { scenario: DemoScenario; phase: number 
   const borderColor = phase === 1 ? "border-amber-500/30" : "border-emerald-500/20";
 
   return (
-    <div className={`h-full flex flex-col md:border-r border-white/8`}>
+    <div className={`h-full flex flex-col md:border-r border-border`}>
       {/* Header */}
-      <div className={`px-4 py-2 border-b border-white/8`}>
+      <div className={`px-4 py-2 border-b border-border`}>
         <span className="text-[10px] font-mono-data font-bold tracking-wider" style={{ color: phaseColor }}>
           {labels.left}
         </span>
       </div>
 
       {/* Shift Metrics */}
-      <div className="grid grid-cols-3 gap-0 border-b border-white/8">
+      <div className="grid grid-cols-3 gap-0 border-b border-border">
         {[
           { label: "OUTPUT", value: scenario.shiftMetrics.output },
           { label: "ENERGY", value: scenario.shiftMetrics.energy },
           { label: "EFFICIENCY", value: scenario.shiftMetrics.efficiency },
         ].map(({ label, value }) => (
-          <div key={label} className="px-3 py-2 border-r border-white/8 last:border-r-0">
+          <div key={label} className="px-3 py-2 border-r border-border last:border-r-0">
             <div className="text-[9px] text-gray-400 font-mono-data">{label}</div>
-            <div className="text-xs font-bold text-white font-mono-data">{value}</div>
+            <div className="text-xs font-bold text-foreground font-mono-data">{value}</div>
           </div>
         ))}
       </div>
 
       {/* Risk Bar */}
-      <div className="px-4 py-3 border-b border-white/8">
+      <div className="px-4 py-3 border-b border-border">
         <div className="text-[10px] text-gray-400 font-mono-data mb-2">{scenario.riskMetric.name}</div>
         <RiskBar
           value={phase >= 1 ? scenario.riskMetric.peakValue : scenario.riskMetric.normalValue}
@@ -277,7 +293,7 @@ function RightPanel({ scenario, phase, selectedOpt, onSelectOpt }: {
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
-      <div className="px-4 py-2 border-b border-white/8">
+      <div className="px-4 py-2 border-b border-border">
         <span className="text-[10px] font-mono-data font-bold tracking-wider" style={{ color: rightColor }}>
           {labels.right}
         </span>
@@ -289,7 +305,7 @@ function RightPanel({ scenario, phase, selectedOpt, onSelectOpt }: {
           <div className="space-y-4">
             <div>
               <div className="text-[10px] text-gray-400 font-mono-data mb-1">SCENARIO</div>
-              <div className="text-sm font-semibold text-white">{scenario.scenarioName}</div>
+              <div className="text-sm font-semibold text-foreground">{scenario.scenarioName}</div>
             </div>
             <div>
               <div className="text-[10px] text-gray-400 font-mono-data mb-1">CONTEXT</div>
@@ -314,7 +330,7 @@ function RightPanel({ scenario, phase, selectedOpt, onSelectOpt }: {
           <div className="space-y-4">
             <div className="p-3 rounded border border-amber-500/40 bg-amber-500/8">
               <div className="text-[10px] text-amber-400 font-mono-data mb-1">⚠ PREDICTIVE ALERT</div>
-              <div className="text-sm font-semibold text-white mb-1">{scenario.predictiveAlert.title}</div>
+              <div className="text-sm font-semibold text-foreground mb-1">{scenario.predictiveAlert.title}</div>
               <div className="text-xs text-gray-300">{scenario.predictiveAlert.message}</div>
             </div>
             <div className="p-3 rounded border border-white/10 bg-white/3">
@@ -322,11 +338,11 @@ function RightPanel({ scenario, phase, selectedOpt, onSelectOpt }: {
               <div className="space-y-2 text-xs text-gray-400">
                 <div className="flex gap-2">
                   <span className="text-amber-400 shrink-0">⚠</span>
-                  <span><strong className="text-white">Predictive (current state):</strong> Tells you something is wrong. No action guidance.</span>
+                  <span><strong className="text-foreground">Predictive (current state):</strong> Tells you something is wrong. No action guidance.</span>
                 </div>
                 <div className="flex gap-2">
                   <span className="text-[#FF4D00] shrink-0">→</span>
-                  <span><strong className="text-white">Prescriptive (Gaintropy):</strong> Tells you exactly what to do, when, and the expected outcome.</span>
+                  <span><strong className="text-foreground">Prescriptive (Gaintropy):</strong> Tells you exactly what to do, when, and the expected outcome.</span>
                 </div>
               </div>
             </div>
@@ -366,9 +382,9 @@ function RightPanel({ scenario, phase, selectedOpt, onSelectOpt }: {
                         { label: "Prevention Rate", value: `${Math.round(proj.preventionRate * 100)}%` },
                         { label: "Platform Cost", value: `$${(proj.platformCost / 1000).toFixed(0)}K/yr` },
                       ].map(({ label, value }) => (
-                        <div key={label} className="p-2 rounded border border-white/8 bg-white/3">
+                        <div key={label} className="p-2 rounded border border-border bg-white/3">
                           <div className="text-[9px] text-gray-400 font-mono-data">{label}</div>
-                          <div className="text-sm font-bold text-white font-mono-data">{value}</div>
+                          <div className="text-sm font-bold text-foreground font-mono-data">{value}</div>
                         </div>
                       ))}
                     </div>
@@ -382,7 +398,7 @@ function RightPanel({ scenario, phase, selectedOpt, onSelectOpt }: {
                       {scenario.annualCostRange} annual cost at risk
                     </div>
                   </div>
-                  <div className="p-2 rounded border border-white/8 bg-white/3 text-xs text-gray-400">
+                  <div className="p-2 rounded border border-border bg-white/3 text-xs text-gray-400">
                     <span className="text-gray-400">Tradeoff: </span>{opt.tradeoff}
                   </div>
                 </>
@@ -412,12 +428,12 @@ function DemoEngine({ scenario }: { scenario: DemoScenario }) {
   return (
     <div className="flex flex-col h-full">
       {/* Phase stepper */}
-      <div className="flex items-center gap-0 border-b border-white/8 shrink-0">
+      <div className="flex items-center gap-0 border-b border-border shrink-0">
         {phaseNames.map((name, i) => (
           <button
             key={name}
             onClick={() => setPhase(i)}
-            className={`flex-1 py-3 md:py-2.5 text-[11px] md:text-[10px] font-mono-data font-bold tracking-widest transition-all border-r border-white/8 last:border-r-0 ${
+            className={`flex-1 py-3 md:py-2.5 text-[11px] md:text-[10px] font-mono-data font-bold tracking-widest transition-all border-r border-border last:border-r-0 ${
               i === phase ? "bg-white/5" : "hover:bg-white/3"
             }`}
             style={{ color: i === phase ? phaseColors[i] : "#4B5563" }}
@@ -433,19 +449,19 @@ function DemoEngine({ scenario }: { scenario: DemoScenario }) {
       </div>
 
       {/* Mobile tab toggle (observe / predict panels) */}
-      <div className="flex md:hidden border-b border-white/8 shrink-0">
+      <div className="flex md:hidden border-b border-border shrink-0">
         <button
           onClick={() => setMobileTab("observe")}
           className={`flex-1 py-2.5 text-[10px] font-mono-data font-bold tracking-wider text-center transition-all ${
-            mobileTab === "observe" ? "bg-white/5 text-white" : "text-gray-400"
+            mobileTab === "observe" ? "bg-white/5 text-foreground" : "text-gray-400"
           }`}
         >
           OBSERVE
         </button>
         <button
           onClick={() => setMobileTab("predict")}
-          className={`flex-1 py-2.5 text-[10px] font-mono-data font-bold tracking-wider text-center transition-all border-l border-white/8 ${
-            mobileTab === "predict" ? "bg-white/5 text-white" : "text-gray-400"
+          className={`flex-1 py-2.5 text-[10px] font-mono-data font-bold tracking-wider text-center transition-all border-l border-border ${
+            mobileTab === "predict" ? "bg-white/5 text-foreground" : "text-gray-400"
           }`}
         >
           {phase >= 2 ? "PRESCRIBE" : "PREDICT"}
@@ -470,11 +486,11 @@ function DemoEngine({ scenario }: { scenario: DemoScenario }) {
       </div>
 
       {/* Nav */}
-      <div className="flex items-center justify-between px-4 py-3 md:py-3 border-t border-white/8 shrink-0">
+      <div className="flex items-center justify-between px-4 py-3 md:py-3 border-t border-border shrink-0">
         <button
           onClick={prev}
           disabled={phase === 0}
-          className="text-xs font-mono-data text-gray-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors py-1 px-2"
+          className="text-xs font-mono-data text-gray-400 hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-colors py-1 px-2"
         >
           ← PREV
         </button>
@@ -513,24 +529,27 @@ export default function Demo() {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       {/* Nav */}
-      <header className="border-b border-white/8 px-4 md:px-6 py-3 flex items-center justify-between shrink-0">
+      <header className="border-b border-border px-4 md:px-6 py-3 flex items-center justify-between shrink-0">
         <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-base font-bold tracking-tight text-white group-hover:text-[#FF4D00] transition-colors">
+          <span className="text-base font-bold tracking-tight text-foreground group-hover:text-[#FF4D00] transition-colors">
             GAINTROPY
           </span>
-          <span className="text-gray-400 text-sm">/ Interactive Demo</span>
+          <span className="text-muted-foreground text-sm">/ Interactive Demo</span>
         </Link>
-        <Link
-          href="/#waitlist"
-          className="text-xs font-mono-data px-4 py-1.5 rounded border border-[#FF4D00] text-[#FF4D00] hover:bg-[#FF4D00] hover:text-black transition-all"
-        >
-          REQUEST ACCESS
-        </Link>
+        <div className="flex items-center gap-3">
+          <DemoThemeToggle />
+          <Link
+            href="/#waitlist"
+            className="text-xs font-mono-data px-4 py-1.5 rounded border border-[#FF4D00] text-[#FF4D00] hover:bg-[#FF4D00] hover:text-black transition-all"
+          >
+            REQUEST ACCESS
+          </Link>
+        </div>
       </header>
 
       {/* Title bar */}
-      <div className="px-4 md:px-6 py-4 border-b border-white/8 shrink-0">
-        <h1 className="text-lg md:text-xl font-bold text-white">
+      <div className="px-4 md:px-6 py-4 border-b border-border shrink-0">
+        <h1 className="text-lg md:text-xl font-bold text-foreground">
           Prescriptive Operations Intelligence
         </h1>
         <p className="text-xs text-gray-400 mt-0.5">
@@ -539,7 +558,7 @@ export default function Demo() {
       </div>
 
       {/* Industry Grid */}
-      <div className="px-4 md:px-6 py-3 border-b border-white/8 shrink-0">
+      <div className="px-4 md:px-6 py-3 border-b border-border shrink-0">
         <div className="flex flex-wrap gap-1.5">
           {INDUSTRY_CONFIGS.map((ind) => (
             <button
@@ -560,7 +579,7 @@ export default function Demo() {
       </div>
 
       {/* Mobile scenario selector (horizontal scroll) */}
-      <div className="md:hidden px-4 py-2 border-b border-white/8 shrink-0 overflow-x-auto">
+      <div className="md:hidden px-4 py-2 border-b border-border shrink-0 overflow-x-auto">
         <div className="text-[10px] text-gray-400 font-mono-data tracking-wider mb-2">SCENARIOS</div>
         <div className="flex gap-2">
           {scenariosForIndustry.map((s, i) => (
@@ -583,8 +602,8 @@ export default function Demo() {
       {/* Scenario selector + demo panel */}
       <div className="flex-1 flex min-h-0">
         {/* Scenario list (desktop only) */}
-        <div className="hidden md:flex w-64 shrink-0 border-r border-white/8 flex-col min-h-0">
-          <div className="px-3 py-2 border-b border-white/8">
+        <div className="hidden md:flex w-64 shrink-0 border-r border-border flex-col min-h-0">
+          <div className="px-3 py-2 border-b border-border">
             <div className="text-[10px] text-gray-400 font-mono-data tracking-wider">SCENARIOS</div>
           </div>
           <div className="flex-1 overflow-y-auto">

@@ -16,18 +16,23 @@ interface ThemeProviderProps {
   switchable?: boolean;
 }
 
+function detectInitialTheme(defaultTheme: Theme, switchable: boolean): Theme {
+  if (!switchable) return defaultTheme;
+  // 1. Saved preference
+  const stored = localStorage.getItem("theme") as Theme | null;
+  if (stored === "light" || stored === "dark") return stored;
+  // 2. System preference
+  if (typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: light)").matches) return "light";
+  // 3. Fall back to default
+  return defaultTheme;
+}
+
 export function ThemeProvider({
   children,
-  defaultTheme = "light",
+  defaultTheme = "dark",
   switchable = false,
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (switchable) {
-      const stored = localStorage.getItem("theme");
-      return (stored as Theme) || defaultTheme;
-    }
-    return defaultTheme;
-  });
+  const [theme, setTheme] = useState<Theme>(() => detectInitialTheme(defaultTheme, switchable));
 
   useEffect(() => {
     const root = document.documentElement;
@@ -42,10 +47,22 @@ export function ThemeProvider({
     }
   }, [theme, switchable]);
 
-  const toggleTheme = switchable
-    ? () => {
-        setTheme(prev => (prev === "light" ? "dark" : "light"));
+  // Listen for OS-level theme change (if user hasn't manually toggled)
+  useEffect(() => {
+    if (!switchable) return;
+    const mq = window.matchMedia("(prefers-color-scheme: light)");
+    const handler = (e: MediaQueryListEvent) => {
+      // Only follow system if user hasn't explicitly chosen
+      if (!localStorage.getItem("theme")) {
+        setTheme(e.matches ? "light" : "dark");
       }
+    };
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, [switchable]);
+
+  const toggleTheme = switchable
+    ? () => setTheme(prev => (prev === "light" ? "dark" : "light"))
     : undefined;
 
   return (
