@@ -938,11 +938,11 @@ function MoneyCounter() {
   return (
     <div
       className="fixed top-0 left-0 right-0 z-[60] flex items-center justify-center gap-2 px-4 py-1.5"
-      style={{ background: "#0A0A0A", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
+      style={{ background: "var(--g-page-bg)", borderBottom: "1px solid var(--g-card-border)" }}
     >
       <p
         className="text-xs text-center"
-        style={{ color: "rgba(255,255,255,0.65)", fontFamily: "Space Grotesk, sans-serif" }}
+        style={{ color: "var(--g-text-secondary)", fontFamily: "Space Grotesk, sans-serif" }}
       >
         Since you opened this page, the average mid-market plant has wasted{" "}
         <span
@@ -956,7 +956,7 @@ function MoneyCounter() {
         onClick={dismiss}
         aria-label="Dismiss"
         className="ml-2 flex-shrink-0 transition-opacity hover:opacity-100"
-        style={{ color: "rgba(255,255,255,0.4)", fontSize: "14px", lineHeight: 1 }}
+        style={{ color: "var(--g-text-secondary)", fontSize: "14px", lineHeight: 1 }}
       >
         ×
       </button>
@@ -997,7 +997,7 @@ function Navbar() {
             width={32}
             height={32}
             className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-105"
-            style={{ filter: isDark ? "none" : "invert(1)" }}
+            style={{ mixBlendMode: isDark ? "normal" : "multiply" }}
           />
           <span
             className="font-display font-bold text-base tracking-tight"
@@ -1099,11 +1099,13 @@ function Navbar() {
 
 function Hero() {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   return (
     <section
       className="relative min-h-screen flex flex-col justify-center overflow-hidden"
-      style={{ background: "#0A0A0A" }}
+      style={{ background: "var(--g-page-bg)" }}
     >
       {/* Background hero video */}
       <video
@@ -1122,7 +1124,9 @@ function Hero() {
       <div
         className="absolute inset-0"
         style={{
-          background: "linear-gradient(to right, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.15) 100%)",
+          background: isDark
+            ? "linear-gradient(to right, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.15) 100%)"
+            : "linear-gradient(to right, rgba(245,245,245,0.85) 0%, rgba(245,245,245,0.5) 50%, rgba(245,245,245,0.2) 100%)",
         }}
       />
 
@@ -1137,7 +1141,7 @@ function Hero() {
           <div className="w-1 h-1 rounded-full" style={{ background: "#FF4D00" }} />
           <span
             className="text-xs tracking-[0.2em] uppercase"
-            style={{ color: "rgba(255,255,255,0.3)", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
           >
             Prescriptive Operations Intelligence
           </span>
@@ -1163,7 +1167,7 @@ function Hero() {
           <br />
           into operational
           <br />
-          <span style={{ WebkitTextStroke: "2px rgba(255,255,255,0.6)", color: "transparent" }}>
+          <span style={{ WebkitTextStroke: isDark ? "2px rgba(255,255,255,0.6)" : "2px rgba(0,0,0,0.3)", color: "transparent" }}>
             gain.
           </span>
         </motion.h1>
@@ -1174,11 +1178,11 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
           className="text-lg max-w-lg leading-relaxed mb-12"
-          style={{ color: "rgba(255,255,255,0.45)", fontFamily: "Space Grotesk, sans-serif" }}
+          style={{ color: "var(--g-text-secondary)", fontFamily: "Space Grotesk, sans-serif" }}
         >
           Every industrial plant is burning money it cannot see.
           <br />
-          <span style={{ color: "rgba(255,255,255,0.75)" }}>
+          <span style={{ color: "var(--g-text-secondary)" }}>
             Gaintropy shows you exactly where. And exactly what to do about it.
           </span>
         </motion.p>
@@ -1200,8 +1204,8 @@ function Hero() {
           <button
             onClick={() => document.getElementById("access")?.scrollIntoView({ behavior: "smooth" })}
             className="flex items-center gap-2 text-sm transition-colors duration-200"
-            style={{ color: "rgba(255,255,255,0.4)", fontFamily: "Space Grotesk, sans-serif" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#FFFFFF")}
+            style={{ color: "var(--g-text-secondary)", fontFamily: "Space Grotesk, sans-serif" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--g-text)")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
           >
             Request a live walkthrough
@@ -1230,12 +1234,14 @@ function Hero() {
 function TheMoment() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   return (
     <section
       ref={ref}
       className="py-40"
-      style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
+      style={{ background: "var(--g-page-bg)", borderTop: "1px solid var(--g-card-border)" }}
     >
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         {/* Section label */}
@@ -1247,7 +1253,7 @@ function TheMoment() {
         >
           <p
             className="text-xs tracking-[0.2em] uppercase mb-4"
-            style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
           >
             The difference
           </p>
@@ -1256,30 +1262,30 @@ function TheMoment() {
             style={{
               fontSize: "clamp(2rem, 5vw, 3.75rem)",
               fontFamily: "Space Grotesk, sans-serif",
-              color: "#FFFFFF",
+              color: "var(--g-text)",
               letterSpacing: "-0.02em",
             }}
           >
             This is where every other
             <br />
             platform{" "}
-            <span style={{ color: "rgba(255,255,255,0.25)" }}>stops.</span>
+            <span style={{ color: "var(--g-text-dim)" }}>stops.</span>
           </h2>
         </motion.div>
 
         {/* Two-panel story */}
-        <div className="grid md:grid-cols-2 gap-px" style={{ background: "rgba(255,255,255,0.06)" }}>
+        <div className="grid md:grid-cols-2 gap-px" style={{ background: "var(--g-card-border)" }}>
           {/* Panel 1: Every other platform */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
             className="p-5 md:p-10 flex flex-col"
-            style={{ background: "#0A0A0A" }}
+            style={{ background: "var(--g-page-bg)" }}
           >
             <div
               className="text-xs tracking-widest uppercase mb-6"
-              style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Space Grotesk, sans-serif" }}
+              style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
             >
               Every other platform
             </div>
@@ -1299,7 +1305,7 @@ function TheMoment() {
                   </div>
                   <div
                     className="text-sm leading-relaxed"
-                    style={{ color: "rgba(255,255,255,0.6)", fontFamily: "Space Grotesk, sans-serif" }}
+                    style={{ color: "var(--g-text-secondary)", fontFamily: "Space Grotesk, sans-serif" }}
                   >
                     Furnace operating 27% above optimal. Estimated excess cost:{" "}
                     <span
@@ -1312,10 +1318,10 @@ function TheMoment() {
                 </div>
               </div>
               <div className="mt-6 pt-5 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-                <div className="text-xs italic" style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Space Grotesk, sans-serif" }}>
+                <div className="text-xs italic" style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}>
                   . . .
                 </div>
-                <div className="text-xs mt-2 italic" style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Space Grotesk, sans-serif" }}>
+                <div className="text-xs mt-2 italic" style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}>
                   No recommended action.
                 </div>
               </div>
@@ -1323,7 +1329,7 @@ function TheMoment() {
 
             <div
               className="text-sm leading-relaxed"
-              style={{ color: "rgba(255,255,255,0.3)", fontFamily: "Space Grotesk, sans-serif" }}
+              style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
             >
               The operator sees the number. The clock runs. The decision, made under pressure, without guidance, is where the money is lost.
             </div>
@@ -1363,11 +1369,11 @@ function TheMoment() {
                   }}
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <span className="font-mono text-xs flex-shrink-0" style={{ color: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono, monospace" }}>
+                    <span className="font-mono text-xs flex-shrink-0" style={{ color: "var(--g-text-dim)", fontFamily: "JetBrains Mono, monospace" }}>
                       {p.rank}
                     </span>
                     <div className="min-w-0">
-                      <div className="text-xs font-semibold mb-0.5 truncate" style={{ color: "#FFFFFF", fontFamily: "Space Grotesk, sans-serif" }}>
+                      <div className="text-xs font-semibold mb-0.5 truncate" style={{ color: "var(--g-text)", fontFamily: "Space Grotesk, sans-serif" }}>
                         {p.name}
                       </div>
                       <span
@@ -1382,7 +1388,7 @@ function TheMoment() {
                     <div className="text-sm font-bold" style={{ color: "#FF4D00", fontFamily: "JetBrains Mono, monospace" }}>
                       {p.savings}
                     </div>
-                    <div className="text-xs" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "Space Grotesk, sans-serif" }}>
+                    <div className="text-xs" style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}>
                       {p.prob} success
                     </div>
                   </div>
@@ -1397,7 +1403,7 @@ function TheMoment() {
               className="mt-6 flex items-center gap-2"
             >
               <div className="w-1 h-1 rounded-full" style={{ background: "#00D4FF" }} />
-              <span className="text-xs" style={{ color: "rgba(255,255,255,0.25)", fontFamily: "JetBrains Mono, monospace" }}>
+              <span className="text-xs" style={{ color: "var(--g-text-dim)", fontFamily: "JetBrains Mono, monospace" }}>
                 3 options generated in 1.2s
               </span>
             </motion.div>
@@ -1438,7 +1444,7 @@ function InteractiveDemo() {
     <section
       ref={ref}
       className="py-32"
-      style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
+      style={{ background: "var(--g-page-bg)", borderTop: "1px solid var(--g-card-border)" }}
     >
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         <motion.div
@@ -1449,7 +1455,7 @@ function InteractiveDemo() {
         >
           <p
             className="text-xs tracking-[0.2em] uppercase mb-4"
-            style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
           >
             Live scenario
           </p>
@@ -1458,7 +1464,7 @@ function InteractiveDemo() {
             style={{
               fontSize: "clamp(2rem, 5vw, 3.75rem)",
               fontFamily: "Space Grotesk, sans-serif",
-              color: "#FFFFFF",
+              color: "var(--g-text)",
               letterSpacing: "-0.02em",
             }}
           >
@@ -1480,12 +1486,12 @@ function InteractiveDemo() {
               onFocus={(e) => (e.target.style.borderColor = "rgba(255,77,0,0.4)")}
               onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.12)")}
             >
-              <option value="" disabled style={{ background: "#111" }}>Select your industry</option>
+              <option value="" disabled style={{ background: "var(--g-card-bg)" }}>Select your industry</option>
               {INDUSTRIES.map((ind) => (
-                <option key={ind} value={ind} style={{ background: "#111", color: "#FFF" }}>{ind}</option>
+                <option key={ind} value={ind} style={{ background: "var(--g-card-bg)", color: "var(--g-text)" }}>{ind}</option>
               ))}
             </select>
-            <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "rgba(255,255,255,0.3)" }} />
+            <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "var(--g-text-dim)" }} />
           </div>
         </motion.div>
 
@@ -1495,7 +1501,7 @@ function InteractiveDemo() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2 }}
           className="rounded-sm overflow-hidden"
-          style={{ border: "1px solid rgba(255,255,255,0.06)", background: "#0D0D0D" }}
+          style={{ border: "1px solid var(--g-card-border)", background: "#0D0D0D" }}
         >
           {!selectedIndustry ? (
             <div className="flex items-center justify-center py-24">
@@ -1576,7 +1582,7 @@ function InteractiveDemo() {
                         }}
                       >
                         {sensor.value}
-                        <span className="text-xs ml-1" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "JetBrains Mono, monospace" }}>
+                        <span className="text-xs ml-1" style={{ color: "var(--g-text-dim)", fontFamily: "JetBrains Mono, monospace" }}>
                           {sensor.unit}
                         </span>
                       </div>
@@ -1606,7 +1612,7 @@ function InteractiveDemo() {
                           {scenario.alertText}
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="text-xs" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "Space Grotesk, sans-serif" }}>
+                          <span className="text-xs" style={{ color: "var(--g-text-secondary)", fontFamily: "Space Grotesk, sans-serif" }}>
                             Confidence:{" "}
                           </span>
                           <span style={{ color: "#00D4FF", fontFamily: "JetBrains Mono, monospace", fontSize: "12px" }}>
@@ -1647,11 +1653,11 @@ function InteractiveDemo() {
                         }}
                       >
                         <div className="flex items-center gap-3 min-w-0">
-                          <span className="text-xs flex-shrink-0" style={{ color: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono, monospace" }}>
+                          <span className="text-xs flex-shrink-0" style={{ color: "var(--g-text-dim)", fontFamily: "JetBrains Mono, monospace" }}>
                             {p.rank}
                           </span>
                           <div className="min-w-0">
-                            <div className="text-xs font-semibold mb-0.5 truncate" style={{ color: "#FFFFFF", fontFamily: "Space Grotesk, sans-serif" }}>
+                            <div className="text-xs font-semibold mb-0.5 truncate" style={{ color: "var(--g-text)", fontFamily: "Space Grotesk, sans-serif" }}>
                               {p.name}
                             </div>
                             <span
@@ -1666,7 +1672,7 @@ function InteractiveDemo() {
                           <div className="text-sm font-bold" style={{ color: "#FF4D00", fontFamily: "JetBrains Mono, monospace" }}>
                             {p.savings}
                           </div>
-                          <div className="text-xs" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "Space Grotesk, sans-serif" }}>
+                          <div className="text-xs" style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}>
                             {p.prob} success
                           </div>
                         </div>
@@ -1743,7 +1749,7 @@ function IndustryTicker() {
     <section
       ref={ref}
       className="py-24 overflow-hidden"
-      style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
+      style={{ background: "var(--g-page-bg)", borderTop: "1px solid var(--g-card-border)" }}
     >
       <div className="max-w-6xl mx-auto px-4 md:px-6 mb-10">
         <motion.p
@@ -1751,7 +1757,7 @@ function IndustryTicker() {
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6 }}
           className="text-xs tracking-[0.2em] uppercase"
-          style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Space Grotesk, sans-serif" }}
+          style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
         >
           50 industries. Every one of them.
         </motion.p>
@@ -1765,11 +1771,11 @@ function IndustryTicker() {
       >
         <div
           className="absolute left-0 top-0 bottom-0 w-12 md:w-24 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(to right, #0A0A0A, transparent)" }}
+          style={{ background: `linear-gradient(to right, var(--g-page-bg), transparent)` }}
         />
         <div
           className="absolute right-0 top-0 bottom-0 w-12 md:w-24 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(to left, #0A0A0A, transparent)" }}
+          style={{ background: `linear-gradient(to left, var(--g-page-bg), transparent)` }}
         />
 
         {/* Row 1 — scrolls left */}
@@ -1801,7 +1807,7 @@ function IndustryTicker() {
             style={{
               left: tooltipPos.x + 12,
               top: tooltipPos.y - 40,
-              background: "#111",
+              background: "var(--g-card-bg)",
               border: "1px solid rgba(255,255,255,0.1)",
             }}
           >
@@ -1828,7 +1834,7 @@ function KnowledgeDrain() {
     <section
       ref={ref}
       className="py-40"
-      style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
+      style={{ background: "var(--g-page-bg)", borderTop: "1px solid var(--g-card-border)" }}
     >
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         <motion.div
@@ -1839,7 +1845,7 @@ function KnowledgeDrain() {
         >
           <p
             className="text-xs tracking-[0.2em] uppercase mb-8"
-            style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
           >
             The real crisis
           </p>
@@ -1848,7 +1854,7 @@ function KnowledgeDrain() {
             style={{
               fontSize: "clamp(2.25rem, 5vw, 3.75rem)",
               fontFamily: "Space Grotesk, sans-serif",
-              color: "#FFFFFF",
+              color: "var(--g-text)",
               letterSpacing: "-0.02em",
             }}
           >
@@ -1856,13 +1862,13 @@ function KnowledgeDrain() {
           </h2>
           <p
             className="text-base leading-relaxed mb-6"
-            style={{ color: "rgba(255,255,255,0.4)", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--g-text-secondary)", fontFamily: "Space Grotesk, sans-serif" }}
           >
             30 years of intuition. The exact feel for when Furnace 3 is about to drift. The instinct that saves a $200,000 heat. When Dave walks out the door, that knowledge walks with him.
           </p>
           <p
             className="text-base leading-relaxed"
-            style={{ color: "rgba(255,255,255,0.65)", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--g-text-secondary)", fontFamily: "Space Grotesk, sans-serif" }}
           >
             Gaintropy encodes operational expertise into mathematics. It doesn't forget. It doesn't have bad shifts. It gets better every day.
           </p>
@@ -1900,7 +1906,7 @@ function Credibility() {
     <section
       ref={ref}
       className="py-32"
-      style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
+      style={{ background: "var(--g-page-bg)", borderTop: "1px solid var(--g-card-border)" }}
     >
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         <div className="grid md:grid-cols-3 gap-px" style={{ background: "rgba(255,255,255,0.06)" }}>
@@ -1911,7 +1917,7 @@ function Credibility() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.12 }}
               className="p-4 md:p-8"
-              style={{ background: "#0A0A0A" }}
+              style={{ background: "var(--g-page-bg)" }}
             >
               <div
                 className="text-lg mb-5"
@@ -1921,7 +1927,7 @@ function Credibility() {
               </div>
               <h3
                 className="font-semibold text-sm leading-snug mb-3"
-                style={{ color: "#FFFFFF", fontFamily: "Space Grotesk, sans-serif" }}
+                style={{ color: "var(--g-text)", fontFamily: "Space Grotesk, sans-serif" }}
               >
                 {block.headline}
               </h3>
@@ -1962,7 +1968,7 @@ function NamePhilosophy() {
     <section
       ref={ref}
       className="py-40"
-      style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
+      style={{ background: "var(--g-page-bg)", borderTop: "1px solid var(--g-card-border)" }}
     >
       <div className="max-w-2xl mx-auto px-4 md:px-6 text-center">
         {lines.map((line, i) => (
@@ -1973,7 +1979,7 @@ function NamePhilosophy() {
             transition={{ duration: 0.7, delay: line.delay, ease: "easeOut" }}
             className="text-xl leading-relaxed mb-6"
             style={{
-              color: "#FFFFFF",
+              color: "var(--g-text)",
               fontFamily: "Space Grotesk, sans-serif",
               fontWeight: 400,
               letterSpacing: "0.01em",
@@ -2027,7 +2033,7 @@ function Access() {
       id="access"
       ref={ref}
       className="py-40"
-      style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
+      style={{ background: "var(--g-page-bg)", borderTop: "1px solid var(--g-card-border)" }}
     >
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         <div className="max-w-xl">
@@ -2038,7 +2044,7 @@ function Access() {
           >
             <p
               className="text-xs tracking-[0.2em] uppercase mb-6"
-              style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Space Grotesk, sans-serif" }}
+              style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
             >
               Early Access
             </p>
@@ -2047,7 +2053,7 @@ function Access() {
               style={{
                 fontSize: "clamp(2.25rem, 5vw, 3.75rem)",
                 fontFamily: "Space Grotesk, sans-serif",
-                color: "#FFFFFF",
+                color: "var(--g-text)",
                 letterSpacing: "-0.02em",
               }}
             >
@@ -2057,7 +2063,7 @@ function Access() {
             </h2>
             <p
               className="text-base leading-relaxed mb-12"
-              style={{ color: "rgba(255,255,255,0.4)", fontFamily: "Space Grotesk, sans-serif" }}
+              style={{ color: "var(--g-text-secondary)", fontFamily: "Space Grotesk, sans-serif" }}
             >
               We are working with a small number of manufacturers to deploy Gaintropy and prove the numbers. If you want to know what your plant is leaving on the table, let's talk.
             </p>
@@ -2078,11 +2084,11 @@ function Access() {
                 </div>
                 <h3
                   className="font-display font-bold text-xl mb-2"
-                  style={{ color: "#FFFFFF", fontFamily: "Space Grotesk, sans-serif" }}
+                  style={{ color: "var(--g-text)", fontFamily: "Space Grotesk, sans-serif" }}
                 >
                   We'll be in touch.
                 </h3>
-                <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "Space Grotesk, sans-serif" }}>
+                <p className="text-sm" style={{ color: "var(--g-text-secondary)", fontFamily: "Space Grotesk, sans-serif" }}>
                   Within 48 hours. No sequences, no spam.
                 </p>
               </motion.div>
@@ -2096,7 +2102,7 @@ function Access() {
                     <label
                       htmlFor={`field-${field.key}`}
                       className="block text-xs font-semibold mb-2 tracking-widest"
-                      style={{ color: "rgba(255,255,255,0.25)", fontFamily: "Space Grotesk, sans-serif" }}
+                      style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
                     >
                       {field.label}
                     </label>
@@ -2111,7 +2117,7 @@ function Access() {
                       style={{
                         background: "rgba(255,255,255,0.04)",
                         border: "1px solid rgba(255,255,255,0.08)",
-                        color: "#FFFFFF",
+                        color: "var(--g-text)",
                         fontFamily: "Space Grotesk, sans-serif",
                       }}
                       onFocus={(e) => (e.target.style.borderColor = "rgba(255,77,0,0.4)")}
@@ -2124,7 +2130,7 @@ function Access() {
                   <label
                     htmlFor="field-industry"
                     className="block text-xs font-semibold mb-2 tracking-widest"
-                    style={{ color: "rgba(255,255,255,0.25)", fontFamily: "Space Grotesk, sans-serif" }}
+                    style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
                   >
                     INDUSTRY
                   </label>
@@ -2143,11 +2149,11 @@ function Access() {
                     onFocus={(e) => (e.target.style.borderColor = "rgba(255,77,0,0.4)")}
                     onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.08)")}
                   >
-                    <option value="" disabled style={{ background: "#111" }}>Select your industry</option>
+                    <option value="" disabled style={{ background: "var(--g-card-bg)" }}>Select your industry</option>
                     {INDUSTRIES.map((ind) => (
-                      <option key={ind} value={ind} style={{ background: "#111", color: "#FFF" }}>{ind}</option>
+                      <option key={ind} value={ind} style={{ background: "var(--g-card-bg)", color: "var(--g-text)" }}>{ind}</option>
                     ))}
-                    <option value="Other" style={{ background: "#111", color: "#FFF" }}>Other</option>
+                    <option value="Other" style={{ background: "var(--g-card-bg)", color: "var(--g-text)" }}>Other</option>
                   </select>
                 </div>
 
@@ -2155,7 +2161,7 @@ function Access() {
                 <div>
                   <label
                     className="block text-xs font-semibold mb-2 tracking-widest"
-                    style={{ color: "rgba(255,255,255,0.25)", fontFamily: "Space Grotesk, sans-serif" }}
+                    style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
                   >
                     I WANT TO
                   </label>
@@ -2222,15 +2228,18 @@ function Access() {
 // ─── FOOTER ───────────────────────────────────────────────────────────────────
 
 function Footer() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   return (
     <footer
       className="py-10"
-      style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.04)" }}
+      style={{ background: "var(--g-page-bg)", borderTop: "1px solid var(--g-card-border)" }}
     >
       <div className="max-w-6xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center gap-2.5">
-          <img src={LOGO_URL} alt="Gaintropy" width={28} height={28} className="w-7 h-7 object-contain opacity-70" loading="lazy" />
-          <span className="text-sm" style={{ color: "rgba(255,255,255,0.25)", fontFamily: "Space Grotesk, sans-serif" }}>
+          <img src={LOGO_URL} alt="Gaintropy" width={28} height={28} className="w-7 h-7 object-contain opacity-70" loading="lazy"
+            style={{ mixBlendMode: isDark ? "normal" : "multiply" }} />
+          <span className="text-sm" style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}>
             © 2026 Gaintropy
           </span>
         </div>
@@ -2238,7 +2247,7 @@ function Footer() {
           <a
             href="mailto:hello@gaintropy.com"
             className="text-xs transition-colors duration-200"
-            style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.5)")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.2)")}
           >
@@ -2247,7 +2256,7 @@ function Footer() {
           <button
             onClick={() => document.getElementById("access")?.scrollIntoView({ behavior: "smooth" })}
             className="flex items-center gap-1.5 text-xs transition-colors duration-200"
-            style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.5)")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.2)")}
           >
@@ -2276,7 +2285,7 @@ const globalStyles = `
 
 export default function Home() {
   return (
-    <div style={{ background: "#0A0A0A" }}>
+    <div style={{ background: "var(--g-page-bg)" }}>
       <style>{globalStyles}</style>
       <MoneyCounter />
       <Navbar />
