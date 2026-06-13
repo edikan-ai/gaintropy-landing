@@ -1,7 +1,5 @@
 import { useState, useMemo } from "react";
 import { Link } from "wouter";
-import { Sun, Moon } from "lucide-react";
-import { useTheme } from "../contexts/ThemeContext";
 import atlasData from "@/data/atlas-data.json";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -297,20 +295,6 @@ function ArchetypeCard({ archetype, infra, expanded, onToggle }: {
 
 // ─── Main Explorer Page ──────────────────────────────────────────────────────
 
-function ThemeToggleExplorer() {
-  const { theme, toggleTheme } = useTheme();
-  const isDark = theme === "dark";
-  return (
-    <button
-      onClick={toggleTheme}
-      title={isDark ? "Light mode" : "Dark mode"}
-      className="w-8 h-8 rounded-sm flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-    >
-      {isDark ? <Sun size={16} /> : <Moon size={16} />}
-    </button>
-  );
-}
-
 export default function Explorer() {
   const [step, setStep] = useState(1);
   const [selectedIndustry, setSelectedIndustry] = useState("steel");
@@ -376,7 +360,6 @@ export default function Explorer() {
           <span className="text-muted-foreground text-sm">/ Problem Library</span>
         </Link>
         <div className="flex items-center gap-3">
-          <ThemeToggleExplorer />
           <Link
             href="/#access"
             className="text-xs font-mono-data px-4 py-1.5 rounded border transition-all"

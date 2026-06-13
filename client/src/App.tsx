@@ -30,7 +30,7 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="dark" switchable>
+      <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
           <Suspense fallback={<div className="min-h-screen bg-background" />}>

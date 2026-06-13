@@ -7,8 +7,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ArrowRight, ExternalLink, Menu, X, ChevronDown, Sun, Moon } from "lucide-react";
-import { useTheme } from "../contexts/ThemeContext";
+import { ArrowRight, ExternalLink, Menu, X, ChevronDown } from "lucide-react";
 
 // ─── ASSETS ───────────────────────────────────────────────────────────────────
 
@@ -969,8 +968,6 @@ function MoneyCounter() {
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
-  const isDark = theme === "dark";
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -997,7 +994,6 @@ function Navbar() {
             width={32}
             height={32}
             className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-105"
-            style={{ mixBlendMode: isDark ? "normal" : "multiply" }}
           />
           <span
             className="font-display font-bold text-base tracking-tight"
@@ -1018,17 +1014,6 @@ function Navbar() {
           >
             Request a walkthrough
           </button>
-          {/* Theme toggle */}
-          <button
-            onClick={toggleTheme}
-            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            className="w-8 h-8 rounded-sm flex items-center justify-center transition-colors duration-200"
-            style={{ color: "var(--g-text-secondary)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--g-text)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--g-text-secondary)")}
-          >
-            {isDark ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
           <button
             onClick={() => document.getElementById("access")?.scrollIntoView({ behavior: "smooth" })}
             className="px-5 py-2.5 text-sm font-semibold rounded-sm transition-all duration-200 hover:opacity-90 active:scale-95"
@@ -1038,24 +1023,15 @@ function Navbar() {
           </button>
         </div>
 
-        {/* Mobile toggle + theme */}
-        <div className="flex items-center gap-2 md:hidden">
-          <button
-            onClick={toggleTheme}
-            title={isDark ? "Light mode" : "Dark mode"}
-            className="w-8 h-8 rounded-sm flex items-center justify-center"
-            style={{ color: "var(--g-text-secondary)" }}
-          >
-            {isDark ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
-          <button
-            style={{ color: "var(--g-text-secondary)" }}
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-          >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </div>
+        {/* Mobile toggle */}
+        <button
+          className="md:hidden"
+          style={{ color: "var(--g-text-secondary)" }}
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+        >
+          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </div>
 
       {/* Mobile menu */}
@@ -1099,8 +1075,6 @@ function Navbar() {
 
 function Hero() {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
 
   return (
     <section
@@ -1124,9 +1098,7 @@ function Hero() {
       <div
         className="absolute inset-0"
         style={{
-          background: isDark
-            ? "linear-gradient(to right, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.15) 100%)"
-            : "linear-gradient(to right, rgba(245,245,245,0.85) 0%, rgba(245,245,245,0.5) 50%, rgba(245,245,245,0.2) 100%)",
+          background: "linear-gradient(to right, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.15) 100%)",
         }}
       />
 
@@ -1167,7 +1139,7 @@ function Hero() {
           <br />
           into operational
           <br />
-          <span style={{ WebkitTextStroke: isDark ? "2px rgba(255,255,255,0.6)" : "2px rgba(0,0,0,0.3)", color: "transparent" }}>
+          <span style={{ WebkitTextStroke: "2px rgba(255,255,255,0.6)", color: "transparent" }}>
             gain.
           </span>
         </motion.h1>
@@ -1234,8 +1206,6 @@ function Hero() {
 function TheMoment() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
 
   return (
     <section
@@ -1364,7 +1334,7 @@ function TheMoment() {
                   transition={{ duration: 0.5, delay: p.delay }}
                   className="p-4 rounded-sm flex items-center justify-between gap-4"
                   style={{
-                    background: p.rank === "01" ? "rgba(0,212,255,0.06)" : isDark ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.02)",
+                    background: p.rank === "01" ? "rgba(0,212,255,0.06)" : "rgba(255,255,255,0.02)",
                     border: `1px solid ${p.rank === "01" ? "rgba(0,212,255,0.15)" : "var(--g-card-border)"}`,
                   }}
                 >
@@ -1419,8 +1389,6 @@ function TheMoment() {
 function InteractiveDemo() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
   const [selectedIndustry, setSelectedIndustry] = useState<string>("");
   const [demoStage, setDemoStage] = useState<"idle" | "observe" | "predict" | "prescribe">("idle");
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -1562,7 +1530,7 @@ function InteractiveDemo() {
                       style={{
                         background: sensor.alert && (demoStage === "predict" || demoStage === "prescribe")
                           ? "rgba(255,77,0,0.06)"
-                          : isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.02)",
+                          : "rgba(255,255,255,0.03)",
                         border: `1px solid ${sensor.alert && (demoStage === "predict" || demoStage === "prescribe") ? "rgba(255,77,0,0.25)" : "var(--g-card-border)"}`,
                         transition: "all 0.5s ease",
                       }}
@@ -1650,7 +1618,7 @@ function InteractiveDemo() {
                         transition={{ duration: 0.4, delay: i * 0.12 }}
                         className="p-4 rounded-sm flex items-center justify-between gap-4"
                         style={{
-                          background: p.rank === "01" ? "rgba(0,212,255,0.06)" : isDark ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.02)",
+                          background: p.rank === "01" ? "rgba(0,212,255,0.06)" : "rgba(255,255,255,0.02)",
                           border: `1px solid ${p.rank === "01" ? "rgba(0,212,255,0.15)" : "var(--g-card-border)"}`,
                         }}
                       >
@@ -1703,8 +1671,6 @@ function InteractiveDemo() {
 function IndustryTicker() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
   const [hoveredIndustry, setHoveredIndustry] = useState<string | null>(null);
   const [paused, setPaused] = useState(false);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
@@ -1813,7 +1779,7 @@ function IndustryTicker() {
               top: tooltipPos.y - 40,
               background: "var(--g-card-bg)",
               border: "1px solid var(--g-card-border)",
-              boxShadow: isDark ? "0 4px 12px rgba(0,0,0,0.5)" : "0 4px 12px rgba(0,0,0,0.1)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
             }}
           >
             <div className="text-xs" style={{ color: "var(--g-text-secondary)", fontFamily: "Space Grotesk, sans-serif", whiteSpace: "nowrap" }}>
@@ -2233,8 +2199,6 @@ function Access() {
 // ─── FOOTER ───────────────────────────────────────────────────────────────────
 
 function Footer() {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
   return (
     <footer
       className="py-10"
@@ -2243,7 +2207,7 @@ function Footer() {
       <div className="max-w-6xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center gap-2.5">
           <img src={LOGO_URL} alt="Gaintropy" width={28} height={28} className="w-7 h-7 object-contain opacity-70" loading="lazy"
-            style={{ mixBlendMode: isDark ? "normal" : "multiply" }} />
+            style={{ mixBlendMode: "normal" }} />
           <span className="text-sm" style={{ color: "var(--g-text-dim)", fontFamily: "Space Grotesk, sans-serif" }}>
             © 2026 Gaintropy
           </span>

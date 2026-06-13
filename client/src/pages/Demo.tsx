@@ -1,26 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
-import { Sun, Moon } from "lucide-react";
-import { useTheme } from "../contexts/ThemeContext";
 import { type DemoScenario, type DemoPrescriptiveOption } from "@/data/demoTypes";
 import { INDUSTRY_CONFIGS, type IndustryConfig } from "@/data/industryConfigs";
 import { generateScenariosForIndustry } from "@/data/scenarioEngine";
 
 // ─── constants ────────────────────────────────────────────────────────────────
-function DemoThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
-  const isDark = theme === "dark";
-  return (
-    <button
-      onClick={toggleTheme}
-      title={isDark ? "Light mode" : "Dark mode"}
-      className="w-8 h-8 rounded-sm flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-    >
-      {isDark ? <Sun size={16} /> : <Moon size={16} />}
-    </button>
-  );
-}
-
 const PHASE_LABELS = [
   { left: "OBSERVE: Live Process Data", right: "PREDICT: Baseline Normal" },
   { left: "OBSERVE: Anomaly Detected", right: "PREDICT: Alert Issued" },
@@ -537,7 +521,6 @@ export default function Demo() {
           <span className="text-muted-foreground text-sm">/ Interactive Demo</span>
         </Link>
         <div className="flex items-center gap-3">
-          <DemoThemeToggle />
           <Link
             href="/#waitlist"
             className="text-xs font-mono-data px-4 py-1.5 rounded border border-[#FF4D00] text-[#FF4D00] hover:bg-[#FF4D00] hover:text-black transition-all"
